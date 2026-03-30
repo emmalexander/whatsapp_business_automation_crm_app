@@ -23,21 +23,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _onNextTap() {
     if (_currentPage == 2) {
       Navigator.pushReplacement(
-        context, 
-        MaterialPageRoute(builder: (_) => const MainNavigation())
+        context,
+        MaterialPageRoute(builder: (_) => const MainNavigation()),
       );
     } else {
       _pageController.nextPage(
-        duration: const Duration(milliseconds: 300), 
-        curve: Curves.easeInOut
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
       );
     }
   }
 
   void _onSkipTap() {
     Navigator.pushReplacement(
-      context, 
-      MaterialPageRoute(builder: (_) => const MainNavigation())
+      context,
+      MaterialPageRoute(builder: (_) => const MainNavigation()),
     );
   }
 
@@ -62,9 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(6.0),
-                    child: CustomPaint(
-                      painter: LogoPainter(),
-                    ),
+                    child: CustomPaint(painter: LogoPainter()),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -93,27 +91,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     headlineRow1: 'Master your',
                     headlineRow2: 'WhatsApp ',
                     headlineRow3: 'sales.',
-                    subtitle: 'The architectural ledger for high-\nperformance sales teams.',
+                    subtitle:
+                        'The architectural ledger for high-\nperformance sales teams.',
                     visual: _buildPage1Visual(),
                   ),
                   _buildPageContent(
                     headlineRow1: 'Streamline your',
                     headlineRow2: 'Pipeline ',
                     headlineRow3: 'deals.',
-                    subtitle: 'Track and manage leads effectively\nfrom contact to close.',
+                    subtitle:
+                        'Track and manage leads effectively\nfrom contact to close.',
                     visual: _buildPage2Visual(),
                   ),
                   _buildPageContent(
                     headlineRow1: 'Automate your',
                     headlineRow2: 'Workflow ',
                     headlineRow3: 'tasks.',
-                    subtitle: 'Save time with built-in templates\nand automated smart responses.',
+                    subtitle:
+                        'Save time with built-in templates\nand automated smart responses.',
                     visual: _buildPage3Visual(),
                   ),
                 ],
               ),
             ),
-            
+
             // Fixed bottom section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -130,7 +131,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         width: isActive ? 32 : 6,
                         height: isActive ? 4 : 6,
                         decoration: BoxDecoration(
-                          color: isActive ? const Color(0xFF13753F) : const Color(0xFFD4DBF3),
+                          color: isActive
+                              ? const Color(0xFF13753F)
+                              : const Color(0xFFD4DBF3),
                           borderRadius: BorderRadius.circular(isActive ? 2 : 3),
                         ),
                       );
@@ -144,7 +147,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: ElevatedButton(
                       onPressed: _onNextTap,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF13BA5E), // Bright primary green
+                        backgroundColor: const Color(
+                          0xFF13BA5E,
+                        ), // Bright primary green
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -154,13 +159,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            _currentPage == 2 ? Icons.flash_on : Icons.arrow_forward_rounded, 
-                            color: Colors.white, 
-                            size: 20
+                            _currentPage == 2
+                                ? Icons.flash_on
+                                : Icons.arrow_forward_rounded,
+                            color: Colors.white,
+                            size: 20,
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            _currentPage == 2 ? 'Connect with WhatsApp' : 'Next',
+                            _currentPage == 2
+                                ? 'Connect with WhatsApp'
+                                : 'Next',
                             style: GoogleFonts.inter(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -171,9 +180,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 20),
-                  
+
                   GestureDetector(
                     onTap: _onSkipTap,
                     child: Text(
@@ -185,21 +194,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 32),
-                  
+
                   Text.rich(
                     TextSpan(
                       children: [
-                        const TextSpan(text: "By continuing, you agree to LedgeCRM's "),
+                        const TextSpan(
+                          text: "By continuing, you agree to LedgeCRM's ",
+                        ),
                         TextSpan(
                           text: "Terms",
-                          style: GoogleFonts.inter(decoration: TextDecoration.underline),
+                          style: GoogleFonts.inter(
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                         const TextSpan(text: " and "),
                         TextSpan(
                           text: "Privacy\nPolicy",
-                          style: GoogleFonts.inter(decoration: TextDecoration.underline),
+                          style: GoogleFonts.inter(
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                         const TextSpan(text: "."),
                       ],
@@ -240,7 +255,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   TextSpan(text: '$headlineRow1\n'),
                   TextSpan(
                     text: headlineRow2,
-                    style: const TextStyle(color: Color(0xFF0B8544)), // Darker green
+                    style: const TextStyle(
+                      color: Color(0xFF0B8544),
+                    ), // Darker green
                   ),
                   TextSpan(text: headlineRow3),
                 ],
@@ -255,7 +272,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             // Subtitle
             Text(
               subtitle,
@@ -268,7 +285,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
             const SizedBox(height: 48),
-            
+
             // Visuals
             visual,
             const SizedBox(height: 24),
@@ -305,7 +322,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       color: const Color(0xFF44505C),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: const Icon(Icons.bar_chart, color: Colors.white, size: 20),
+                    child: const Icon(
+                      Icons.bar_chart,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -330,7 +351,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
-          
+
           // Left card (Message Preview)
           Positioned(
             left: 0,
@@ -360,7 +381,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           color: Color(0xFFDFE6F5),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.chat_bubble_rounded, size: 14, color: Color(0xFF0F9D58)),
+                        child: const Icon(
+                          Icons.chat_bubble_rounded,
+                          size: 14,
+                          color: Color(0xFF0F9D58),
+                        ),
                       ),
                       const SizedBox(width: 8),
                       Container(
@@ -409,7 +434,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         shape: BoxShape.circle,
                       ),
                       padding: const EdgeInsets.all(4),
-                      child: const Icon(Icons.check, color: Colors.white, size: 14),
+                      child: const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 14,
+                      ),
                     ),
                   ),
                 ],
@@ -471,7 +500,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   const Spacer(),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFF6EFA89),
                       borderRadius: BorderRadius.circular(20),
@@ -505,30 +537,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             width: double.infinity,
             height: 200,
             decoration: BoxDecoration(
-               color: const Color(0xFFDFE6F5),
-               borderRadius: BorderRadius.circular(20),
+              color: const Color(0xFFDFE6F5),
+              borderRadius: BorderRadius.circular(20),
             ),
           ),
-          
+
           Positioned(
             top: 24,
             left: 20,
             right: 20,
             child: Column(
               children: [
-                _buildMockPipelineCard('Qualify Lead', 'Sarah Johnson', '\$4,500'),
+                _buildMockPipelineCard(
+                  'Qualify Lead',
+                  'Sarah Johnson',
+                  '\$4,500',
+                ),
                 const SizedBox(height: 12),
-                _buildMockPipelineCard('Send Proposal', 'Tech Innovators', '\$12,000'),
+                _buildMockPipelineCard(
+                  'Send Proposal',
+                  'Tech Innovators',
+                  '\$12,000',
+                ),
                 const SizedBox(height: 12),
                 _buildMockPipelineCard('Negotiation', 'Nexus Corp', '\$8,300'),
               ],
-            )
+            ),
           ),
-        ]
-      )
+        ],
+      ),
     );
   }
-  
+
   Widget _buildMockPipelineCard(String stage, String name, String value) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -595,7 +635,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildPage3Visual() {
     return SizedBox(
-      height: 240,
+      height: 260,
       child: Center(
         child: Container(
           width: 260,
@@ -620,9 +660,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   color: const Color(0xFFE8F8F0),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.auto_awesome, color: Color(0xFF13BA5E), size: 32),
+                child: const Icon(
+                  Icons.auto_awesome,
+                  color: Color(0xFF13BA5E),
+                  size: 32,
+                ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               Text(
                 'Auto-Reply Active',
                 style: GoogleFonts.inter(
@@ -642,7 +686,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   height: 1.5,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               Container(
                 width: 48,
                 height: 48,
@@ -653,7 +697,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: const Center(
                   child: Icon(Icons.check, color: Color(0xFF13BA5E), size: 24),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -669,18 +713,37 @@ class LogoPainter extends CustomPainter {
     var paint1 = Paint()..color = Colors.white;
     // Left shape
     canvas.drawRRect(
-      RRect.fromRectAndRadius(Rect.fromLTWH(0, 0, size.width * 0.4, size.height * 0.7), const Radius.circular(2)), 
-      paint1
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(0, 0, size.width * 0.4, size.height * 0.7),
+        const Radius.circular(2),
+      ),
+      paint1,
     );
     // Right shape
     canvas.drawRRect(
-      RRect.fromRectAndRadius(Rect.fromLTWH(size.width * 0.5, size.height * 0.3, size.width * 0.5, size.height * 0.7), const Radius.circular(2)), 
-      paint1
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(
+          size.width * 0.5,
+          size.height * 0.3,
+          size.width * 0.5,
+          size.height * 0.7,
+        ),
+        const Radius.circular(2),
+      ),
+      paint1,
     );
     // Overlap shape
     canvas.drawRRect(
-      RRect.fromRectAndRadius(Rect.fromLTWH(size.width * 0.3, size.height * 0.4, size.width * 0.4, size.height * 0.2), const Radius.circular(2)), 
-      paint1
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(
+          size.width * 0.3,
+          size.height * 0.4,
+          size.width * 0.4,
+          size.height * 0.2,
+        ),
+        const Radius.circular(2),
+      ),
+      paint1,
     );
   }
 

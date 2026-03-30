@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:whatsapp_business_automation_crm_app/widgets/app_drawer.dart';
 
-import 'package:whatsapp_business_automation_crm_app/screens/lead_profile_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/leads/lead_profile_screen.dart';
 
 class LeadsScreen extends StatefulWidget {
   const LeadsScreen({super.key});

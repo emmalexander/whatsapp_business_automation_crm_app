@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:whatsapp_business_automation_crm_app/screens/templates_screen.dart' as whatsapp_business_automation_crm_app;
+import 'package:whatsapp_business_automation_crm_app/screens/templates/templates_screen.dart' as whatsapp_business_automation_crm_app;
 
 class LeadProfileScreen extends StatelessWidget {
   const LeadProfileScreen({super.key});

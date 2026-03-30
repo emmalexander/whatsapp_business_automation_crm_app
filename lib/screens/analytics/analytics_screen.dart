@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:math';
 
 import 'package:whatsapp_business_automation_crm_app/widgets/app_drawer.dart';
 
@@ -73,90 +72,106 @@ class AnalyticsScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Time filter toggle
-            Container(
-              height: 44,
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF3F5FA),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.04),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Weekly view selected')));
-                        },
-                        child: Center(
-                          child: Text(
-                            'Weekly',
-                            style: GoogleFonts.inter(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: const Color(0xFF13753F),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Monthly view selected')));
-                      },
-                      child: Center(
-                        child: Text(
-                          'Monthly',
-                          style: GoogleFonts.inter(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF5A6678),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Custom range selected')));
-                      },
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Custom',
-                              style: GoogleFonts.inter(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFF5A6678),
-                              ),
-                            ),
-                            const SizedBox(width: 4),
-                            const Icon(Icons.calendar_today, size: 12, color: Color(0xFF5A6678)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
+            // Container(
+            //   height: 44,
+            //   padding: const EdgeInsets.all(4),
+            //   decoration: BoxDecoration(
+            //     color: const Color(0xFFF3F5FA),
+            //     borderRadius: BorderRadius.circular(12),
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //         child: Container(
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             borderRadius: BorderRadius.circular(8),
+            //             boxShadow: [
+            //               BoxShadow(
+            //                 color: Colors.black.withOpacity(0.04),
+            //                 blurRadius: 4,
+            //                 offset: const Offset(0, 2),
+            //               ),
+            //             ],
+            //           ),
+            //           child: InkWell(
+            //             onTap: () {
+            //               ScaffoldMessenger.of(context).showSnackBar(
+            //                 const SnackBar(
+            //                   content: Text('Weekly view selected'),
+            //                 ),
+            //               );
+            //             },
+            //             child: Center(
+            //               child: Text(
+            //                 'Weekly',
+            //                 style: GoogleFonts.inter(
+            //                   fontSize: 13,
+            //                   fontWeight: FontWeight.w700,
+            //                   color: const Color(0xFF13753F),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       Expanded(
+            //         child: InkWell(
+            //           onTap: () {
+            //             ScaffoldMessenger.of(context).showSnackBar(
+            //               const SnackBar(
+            //                 content: Text('Monthly view selected'),
+            //               ),
+            //             );
+            //           },
+            //           child: Center(
+            //             child: Text(
+            //               'Monthly',
+            //               style: GoogleFonts.inter(
+            //                 fontSize: 13,
+            //                 fontWeight: FontWeight.w600,
+            //                 color: const Color(0xFF5A6678),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       Expanded(
+            //         child: InkWell(
+            //           onTap: () {
+            //             ScaffoldMessenger.of(context).showSnackBar(
+            //               const SnackBar(
+            //                 content: Text('Custom range selected'),
+            //               ),
+            //             );
+            //           },
+            //           child: Center(
+            //             child: Row(
+            //               mainAxisAlignment: MainAxisAlignment.center,
+            //               children: [
+            //                 Text(
+            //                   'Custom',
+            //                   style: GoogleFonts.inter(
+            //                     fontSize: 13,
+            //                     fontWeight: FontWeight.w600,
+            //                     color: const Color(0xFF5A6678),
+            //                   ),
+            //                 ),
+            //                 const SizedBox(width: 4),
+            //                 const Icon(
+            //                   Icons.calendar_today,
+            //                   size: 12,
+            //                   color: Color(0xFF5A6678),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(height: 24),
 
             // Growth Insight Banner
             Container(
@@ -164,7 +179,9 @@ class AnalyticsScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: const Color(0xFFE8F8F0),
                 borderRadius: BorderRadius.circular(16),
-                border: const Border(left: BorderSide(color: Color(0xFF13753F), width: 4)),
+                border: const Border(
+                  left: BorderSide(color: Color(0xFF13753F), width: 4),
+                ),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +193,11 @@ class AnalyticsScreen extends StatelessWidget {
                       color: const Color(0xFF13BA5E),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(Icons.auto_awesome, color: Colors.white, size: 16),
+                    child: const Icon(
+                      Icons.auto_awesome,
+                      color: Colors.white,
+                      size: 16,
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -196,8 +217,17 @@ class AnalyticsScreen extends StatelessWidget {
                           TextSpan(
                             children: [
                               const TextSpan(text: 'Conversion is up '),
-                              TextSpan(text: '12.4%', style: GoogleFonts.inter(fontWeight: FontWeight.w700, color: const Color(0xFF13753F))),
-                              const TextSpan(text: ' this month! Your fastest response time is now under 4 minutes on WhatsApp leads.'),
+                              TextSpan(
+                                text: '12.4%',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w700,
+                                  color: const Color(0xFF13753F),
+                                ),
+                              ),
+                              const TextSpan(
+                                text:
+                                    ' this month! Your fastest response time is now under 4 minutes on WhatsApp leads.',
+                              ),
                             ],
                           ),
                           style: GoogleFonts.inter(
@@ -218,7 +248,7 @@ class AnalyticsScreen extends StatelessWidget {
             _buildMetricCard('TOTAL LEADS', '1,284', '+14%', isPos: true),
             _buildMetricCard('CONV. RATE', '18.2%', '+2.1%', isPos: true),
             _buildMetricCard('AVG REVENUE', '\$4.2k', '-3%', isPos: false),
-            
+
             // Met vs Overdue specific card
             Container(
               margin: const EdgeInsets.only(bottom: 12),
@@ -227,7 +257,11 @@ class AnalyticsScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 10, offset: const Offset(0, 4)),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.01),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
                 ],
               ),
               child: Row(
@@ -258,7 +292,11 @@ class AnalyticsScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          const Icon(Icons.check_circle, color: Color(0xFF13BA5E), size: 16),
+                          const Icon(
+                            Icons.check_circle,
+                            color: Color(0xFF13BA5E),
+                            size: 16,
+                          ),
                         ],
                       ),
                     ],
@@ -275,7 +313,11 @@ class AnalyticsScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 10, offset: const Offset(0, 4)),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.01),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
                 ],
               ),
               child: Column(
@@ -294,16 +336,21 @@ class AnalyticsScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          _buildLegendDot(const Color(0xFF13753F), 'Closed Deals'),
+                          _buildLegendDot(
+                            const Color(0xFF13753F),
+                            'Closed Deals',
+                          ),
                           const SizedBox(width: 12),
-                          _buildLegendDot(const Color(0xFFC0E8D0), 'Projections'),
+                          _buildLegendDot(
+                            const Color(0xFFC0E8D0),
+                            'Projections',
+                          ),
                         ],
                       ),
                     ],
                   ),
                   const SizedBox(height: 32),
                   SizedBox(
-                    height: 160,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -329,7 +376,11 @@ class AnalyticsScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 10, offset: const Offset(0, 4)),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.01),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
                 ],
               ),
               child: Column(
@@ -359,23 +410,8 @@ class AnalyticsScreen extends StatelessWidget {
                             strokeCap: StrokeCap.round,
                           ),
                         ),
+
                         // Overlay brown indicator manually or assume simple
-                        SizedBox(
-                          width: 140,
-                          height: 140,
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              margin: const EdgeInsets.only(left: 10, bottom: 20),
-                              width: 30,
-                              height: 16,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF9E3F29),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                        ),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -405,9 +441,17 @@ class AnalyticsScreen extends StatelessWidget {
                   const SizedBox(height: 32),
                   _buildListLegendItem(const Color(0xFF13753F), 'Met', '412'),
                   const SizedBox(height: 12),
-                  _buildListLegendItem(const Color(0xFF9E3F29), 'Overdue', '28'),
+                  _buildListLegendItem(
+                    const Color(0xFF9E3F29),
+                    'Overdue',
+                    '28',
+                  ),
                   const SizedBox(height: 12),
-                  _buildListLegendItem(const Color(0xFFD4DBF3), 'Pending', '65'),
+                  _buildListLegendItem(
+                    const Color(0xFFD4DBF3),
+                    'Pending',
+                    '65',
+                  ),
                 ],
               ),
             ),
@@ -415,12 +459,21 @@ class AnalyticsScreen extends StatelessWidget {
 
             // Total Leads Over Time
             Container(
-              padding: const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 24),
+              padding: const EdgeInsets.only(
+                top: 24,
+                left: 24,
+                right: 24,
+                bottom: 24,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 10, offset: const Offset(0, 4)),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.01),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
                 ],
               ),
               child: Column(
@@ -453,20 +506,29 @@ class AnalyticsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Export\nReport',
-                            textAlign: TextAlign.right,
-                            style: GoogleFonts.inter(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w800,
-                              color: const Color(0xFF13753F),
+                      InkWell(
+                        onTap: () {
+                          //
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              'Export\nReport',
+                              textAlign: TextAlign.right,
+                              style: GoogleFonts.inter(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w800,
+                                color: const Color(0xFF13753F),
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          const Icon(Icons.file_download_outlined, color: Color(0xFF13753F), size: 16),
-                        ],
+                            const SizedBox(width: 8),
+                            const Icon(
+                              Icons.file_download_outlined,
+                              color: Color(0xFF13753F),
+                              size: 16,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -485,7 +547,10 @@ class AnalyticsScreen extends StatelessWidget {
                           right: 60,
                           top: 40,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 6,
+                            ),
                             decoration: BoxDecoration(
                               color: const Color(0xFF141A25),
                               borderRadius: BorderRadius.circular(4),
@@ -493,8 +558,21 @@ class AnalyticsScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('May 24', style: GoogleFonts.inter(fontSize: 9, color: const Color(0xFFD3DCF6))),
-                                Text('842 Leads', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.white)),
+                                Text(
+                                  'May 24',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 9,
+                                    color: const Color(0xFFD3DCF6),
+                                  ),
+                                ),
+                                Text(
+                                  '842 Leads',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -507,12 +585,54 @@ class AnalyticsScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('JAN', style: GoogleFonts.inter(fontSize: 9, color: const Color(0xFF8C95A6), fontWeight: FontWeight.w700)),
-                              Text('FEB', style: GoogleFonts.inter(fontSize: 9, color: const Color(0xFF8C95A6), fontWeight: FontWeight.w700)),
-                              Text('MAR', style: GoogleFonts.inter(fontSize: 9, color: const Color(0xFF8C95A6), fontWeight: FontWeight.w700)),
-                              Text('APR', style: GoogleFonts.inter(fontSize: 9, color: const Color(0xFF8C95A6), fontWeight: FontWeight.w700)),
-                              Text('MAY', style: GoogleFonts.inter(fontSize: 9, color: const Color(0xFF8C95A6), fontWeight: FontWeight.w700)),
-                              Text('JUN', style: GoogleFonts.inter(fontSize: 9, color: const Color(0xFF8C95A6), fontWeight: FontWeight.w700)),
+                              Text(
+                                'JAN',
+                                style: GoogleFonts.inter(
+                                  fontSize: 9,
+                                  color: const Color(0xFF8C95A6),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                'FEB',
+                                style: GoogleFonts.inter(
+                                  fontSize: 9,
+                                  color: const Color(0xFF8C95A6),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                'MAR',
+                                style: GoogleFonts.inter(
+                                  fontSize: 9,
+                                  color: const Color(0xFF8C95A6),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                'APR',
+                                style: GoogleFonts.inter(
+                                  fontSize: 9,
+                                  color: const Color(0xFF8C95A6),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                'MAY',
+                                style: GoogleFonts.inter(
+                                  fontSize: 9,
+                                  color: const Color(0xFF8C95A6),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                'JUN',
+                                style: GoogleFonts.inter(
+                                  fontSize: 9,
+                                  color: const Color(0xFF8C95A6),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -522,7 +642,7 @@ class AnalyticsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 80),
           ],
         ),
@@ -530,7 +650,12 @@ class AnalyticsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMetricCard(String title, String val, String pct, {required bool isPos}) {
+  Widget _buildMetricCard(
+    String title,
+    String val,
+    String pct, {
+    required bool isPos,
+  }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -538,7 +663,11 @@ class AnalyticsScreen extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 10, offset: const Offset(0, 4)),
+          BoxShadow(
+            color: Colors.black.withOpacity(0.01),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
         ],
       ),
       child: Row(
@@ -575,7 +704,9 @@ class AnalyticsScreen extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
-                      color: isPos ? const Color(0xFF13753F) : const Color(0xFFB54D31),
+                      color: isPos
+                          ? const Color(0xFF13753F)
+                          : const Color(0xFFB54D31),
                     ),
                   ),
                 ],
@@ -650,7 +781,10 @@ class AnalyticsScreen extends StatelessWidget {
           width: 32,
           decoration: const BoxDecoration(
             color: Color(0xFFC0E8D0),
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(4),
+              topRight: Radius.circular(4),
+            ),
           ),
           height: h2,
         ),
@@ -658,7 +792,10 @@ class AnalyticsScreen extends StatelessWidget {
           width: 32,
           decoration: const BoxDecoration(
             color: Color(0xFF13753F),
-            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(4), bottomRight: Radius.circular(4)),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(4),
+              bottomRight: Radius.circular(4),
+            ),
           ),
           height: h1,
         ),
@@ -698,9 +835,24 @@ class LineChartPainter extends CustomPainter {
 
     final path = Path();
     path.moveTo(0, size.height * 0.8);
-    path.quadraticBezierTo(size.width * 0.2, size.height * 0.6, size.width * 0.3, size.height * 0.7);
-    path.quadraticBezierTo(size.width * 0.5, size.height * 0.9, size.width * 0.6, size.height * 0.4);
-    path.quadraticBezierTo(size.width * 0.8, -size.height * 0.2, size.width, size.height * 0.3);
+    path.quadraticBezierTo(
+      size.width * 0.2,
+      size.height * 0.6,
+      size.width * 0.3,
+      size.height * 0.7,
+    );
+    path.quadraticBezierTo(
+      size.width * 0.5,
+      size.height * 0.9,
+      size.width * 0.6,
+      size.height * 0.4,
+    );
+    path.quadraticBezierTo(
+      size.width * 0.8,
+      -size.height * 0.2,
+      size.width,
+      size.height * 0.3,
+    );
 
     // Fill path
     final fillPath = Path.from(path);

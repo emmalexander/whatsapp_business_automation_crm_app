@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/dashboard_screen.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/leads_screen.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/pipeline_screen.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/templates_screen.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/analytics_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/dashboard/dashboard_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/leads/leads_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/pipeline/pipeline_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/templates/templates_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/analytics/analytics_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   final int initialIndex;

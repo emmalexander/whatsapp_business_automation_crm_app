@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/profile/profile_screen.dart';
 
 import 'package:whatsapp_business_automation_crm_app/widgets/app_drawer.dart';
 
@@ -30,7 +31,11 @@ class DashboardScreen extends StatelessWidget {
                 color: const Color(0xFF13BA5E),
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: const Icon(Icons.dashboard, color: Colors.white, size: 14), // placeholder for logo
+              child: const Icon(
+                Icons.dashboard,
+                color: Colors.white,
+                size: 14,
+              ), // placeholder for logo
             ),
             Text(
               'LedgeCRM',
@@ -45,19 +50,30 @@ class DashboardScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_none, color: Color(0xFF141A25)),
+            icon: const Icon(
+              Icons.notifications_none,
+              color: Color(0xFF141A25),
+            ),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('No new notifications')),
               );
             },
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              radius: 14,
-              backgroundColor: Color(0xFF141A25),
-              child: Icon(Icons.person, color: Colors.white, size: 20),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ProfileScreen()),
+                );
+              },
+              child: CircleAvatar(
+                radius: 14,
+                backgroundColor: Color(0xFF141A25),
+                child: Icon(Icons.person, color: Colors.white, size: 20),
+              ),
             ),
           ),
         ],
@@ -127,7 +143,11 @@ class DashboardScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const Icon(Icons.trending_up, color: Color(0xFF13753F), size: 14),
+                          const Icon(
+                            Icons.trending_up,
+                            color: Color(0xFF13753F),
+                            size: 14,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             '+12%',
@@ -270,7 +290,9 @@ class DashboardScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('View all follow-ups')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('View all follow-ups')),
+                    );
                   },
                   child: Text(
                     'VIEW ALL',
@@ -285,10 +307,16 @@ class DashboardScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            
+
             GestureDetector(
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Open Task: Follow up on Enterprise Proposal')));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Open Task: Follow up on Enterprise Proposal',
+                    ),
+                  ),
+                );
               },
               child: Container(
                 padding: const EdgeInsets.all(16),
@@ -297,7 +325,10 @@ class DashboardScreen extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   border: const Border(
-                    left: BorderSide(color: Color(0xFF9E3F29), width: 4), // Brown/red border
+                    left: BorderSide(
+                      color: Color(0xFF9E3F29),
+                      width: 4,
+                    ), // Brown/red border
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -343,7 +374,10 @@ class DashboardScreen extends StatelessWidget {
                               ),
                               const SizedBox(width: 8),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
                                 decoration: BoxDecoration(
                                   color: const Color(0xFFF0987D),
                                   borderRadius: BorderRadius.circular(12),
@@ -374,7 +408,9 @@ class DashboardScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Message John Doe')));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Message John Doe')),
+                        );
                       },
                       child: Container(
                         width: 40,
@@ -383,7 +419,11 @@ class DashboardScreen extends StatelessWidget {
                           color: Color(0xFFE8F8F0),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.chat_bubble_rounded, color: Color(0xFF13BA5E), size: 18),
+                        child: const Icon(
+                          Icons.chat_bubble_rounded,
+                          color: Color(0xFF13BA5E),
+                          size: 18,
+                        ),
                       ),
                     ),
                   ],
@@ -399,7 +439,10 @@ class DashboardScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
                 border: const Border(
-                  left: BorderSide(color: Color(0xFF13BA5E), width: 4), // Green border
+                  left: BorderSide(
+                    color: Color(0xFF13BA5E),
+                    width: 4,
+                  ), // Green border
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -445,7 +488,10 @@ class DashboardScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: const Color(0xFFC7D3F4),
                                 borderRadius: BorderRadius.circular(12),
@@ -481,7 +527,11 @@ class DashboardScreen extends StatelessWidget {
                       color: Color(0xFFE8F8F0),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.chat_bubble_rounded, color: Color(0xFF13BA5E), size: 18),
+                    child: const Icon(
+                      Icons.chat_bubble_rounded,
+                      color: Color(0xFF13BA5E),
+                      size: 18,
+                    ),
                   ),
                 ],
               ),
@@ -505,21 +555,42 @@ class DashboardScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  _buildActivityRow(Icons.payments, 'Mark as Paid', 'John Doe', '2 MINUTES AGO', const Color(0xFFADDFBF), const Color(0xFF13753F)),
+                  _buildActivityRow(
+                    Icons.payments,
+                    'Mark as Paid',
+                    'John Doe',
+                    '2 MINUTES AGO',
+                    const Color(0xFFADDFBF),
+                    const Color(0xFF13753F),
+                  ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Divider(color: Color(0xFFE5E9F1), height: 1),
                   ),
-                  _buildActivityRow(Icons.person_add, 'Added New Lead', 'Sarah Miller', '45 MINUTES AGO', const Color(0xFFD3DCF6), const Color(0xFF5A6678)),
+                  _buildActivityRow(
+                    Icons.person_add,
+                    'Added New Lead',
+                    'Sarah Miller',
+                    '45 MINUTES AGO',
+                    const Color(0xFFD3DCF6),
+                    const Color(0xFF5A6678),
+                  ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Divider(color: Color(0xFFE5E9F1), height: 1),
                   ),
-                  _buildActivityRow(Icons.edit_note, 'Updated Deal Status', 'TechCorp', '3 HOURS AGO', const Color(0xFFF4D1CE), const Color(0xFF9E3F29)),
+                  _buildActivityRow(
+                    Icons.edit_note,
+                    'Updated Deal Status',
+                    'TechCorp',
+                    '3 HOURS AGO',
+                    const Color(0xFFF4D1CE),
+                    const Color(0xFF9E3F29),
+                  ),
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 80), // Padding for FAB
           ],
         ),
@@ -527,7 +598,7 @@ class DashboardScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
-            context: context, 
+            context: context,
             builder: (context) => AlertDialog(
               title: const Text('Add Item'),
               content: const Text('Dashboard quick add action here.'),
@@ -537,7 +608,7 @@ class DashboardScreen extends StatelessWidget {
                   child: const Text('Close'),
                 ),
               ],
-            )
+            ),
           );
         },
         backgroundColor: const Color(0xFF13BA5E),
@@ -558,16 +629,20 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActivityRow(IconData icon, String action, String target, String time, Color iconBgColor, Color iconColor) {
+  Widget _buildActivityRow(
+    IconData icon,
+    String action,
+    String target,
+    String time,
+    Color iconBgColor,
+    Color iconColor,
+  ) {
     return Row(
       children: [
         Container(
           width: 36,
           height: 36,
-          decoration: BoxDecoration(
-            color: iconBgColor,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: iconBgColor, shape: BoxShape.circle),
           child: Icon(icon, size: 16, color: iconColor),
         ),
         const SizedBox(width: 12),
@@ -580,11 +655,18 @@ class DashboardScreen extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: '$action — ',
-                      style: GoogleFonts.inter(fontWeight: FontWeight.w700, color: const Color(0xFF141A25), fontSize: 13),
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFF141A25),
+                        fontSize: 13,
+                      ),
                     ),
                     TextSpan(
                       text: target,
-                      style: GoogleFonts.inter(color: const Color(0xFF141A25), fontSize: 13),
+                      style: GoogleFonts.inter(
+                        color: const Color(0xFF141A25),
+                        fontSize: 13,
+                      ),
                     ),
                   ],
                 ),

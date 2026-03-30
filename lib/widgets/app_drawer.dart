@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:whatsapp_business_automation_crm_app/screens/main_navigation.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/upgrade_screen.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/profile_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/subscription/upgrade_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/profile/profile_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   final int currentIndex;

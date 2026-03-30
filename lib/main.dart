@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/onboarding_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/onboarding/onboarding_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/theme.dart';
 
 void main() {
