@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:whatsapp_business_automation_crm_app/screens/main_navigation.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/auth/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -24,7 +24,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (_currentPage == 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const MainNavigation()),
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
       );
     } else {
       _pageController.nextPage(
@@ -37,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _onSkipTap() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const MainNavigation()),
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
     );
   }
 
