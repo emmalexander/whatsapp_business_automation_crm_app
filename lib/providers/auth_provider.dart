@@ -1,56 +1,82 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart'
+    show StateNotifier, StateNotifierProvider;
 import 'package:whatsapp_business_automation_crm_app/services/api_service.dart';
 
 final apiServiceProvider = Provider<ApiService>((ref) => ApiService());
 
+// ---------------------------------------------------------------------------
+// AuthNotifier
+// State: bool — true while an async auth operation is in progress
+// ---------------------------------------------------------------------------
 class AuthNotifier extends StateNotifier<bool> {
   final ApiService _apiService;
 
-  AuthNotifier(this._apiService) : super(false); // Initial state is false (not loading)
+  AuthNotifier(this._apiService) : super(false);
 
-  Future<bool> login(String email, String password) async {
+  // Sign Up
+  Future<void> signUp(Map<String, dynamic> data) async {
     state = true;
     try {
-      await _apiService.login(email, password);
-      return true;
-    } catch (e) {
-      rethrow;
+      await _apiService.signUp(data);
     } finally {
       state = false;
     }
   }
 
-  Future<bool> signup(Map<String, String> data) async {
+  // Sign In
+  Future<void> signIn(String email, String password) async {
     state = true;
     try {
-      await _apiService.signup(data);
-      return true;
-    } catch (e) {
-      rethrow;
+      await _apiService.signIn(email, password);
     } finally {
       state = false;
     }
   }
 
-  Future<bool> verifyOtp(String otp) async {
+  // Verify Email OTP (after signup)
+  Future<void> verifyEmail(String email, String code) async {
     state = true;
     try {
-      await _apiService.verifyOtp(otp);
-      return true;
-    } catch (e) {
-      rethrow;
+      await _apiService.verifyEmail(email, code);
     } finally {
       state = false;
     }
   }
 
-  Future<bool> forgotPassword(String email) async {
+  // Resend Verification Code
+  Future<void> resendVerificationCode(String email) async {
     state = true;
     try {
-      await _apiService.forgotPassword(email);
-      return true;
-    } catch (e) {
-      rethrow;
+      await _apiService.resendVerificationCode(email);
+    } finally {
+      state = false;
+    }
+  }
+
+  // Request Password Reset (sends OTP)
+  Future<void> requestPasswordReset(String email) async {
+    state = true;
+    try {
+      await _apiService.requestPasswordReset(email);
+    } finally {
+      state = false;
+    }
+  }
+
+  // Verify Password Reset OTP and set new password
+  Future<void> verifyPasswordReset({
+    required String email,
+    required String code,
+    required String newPassword,
+  }) async {
+    state = true;
+    try {
+      await _apiService.verifyPasswordReset(
+        email: email,
+        code: code,
+        newPassword: newPassword,
+      );
     } finally {
       state = false;
     }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'token_storage_service.dart';
 
 class DioClient {
@@ -11,8 +12,10 @@ class DioClient {
   }
 
   DioClient._internal() {
+    final baseUrl = dotenv.env['BASE_URL'] ?? 'http://localhost:3000/api/v1';
+
     dio = Dio(BaseOptions(
-      baseUrl: 'https://api.example.com/v1', // Generic base url
+      baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ));
@@ -30,12 +33,12 @@ class DioClient {
           // Check if error is 401 Unauthorized
           if (error.response?.statusCode == 401) {
             final refreshToken = await _tokenStorage.getRefreshToken();
-            
+
             if (refreshToken != null) {
               try {
                 // Use a standard dio instance to avoid recursive retries from the interceptor
                 final refreshDio = Dio(BaseOptions(baseUrl: dio.options.baseUrl));
-                
+
                 final response = await refreshDio.post('/auth/refresh-token', data: {
                   'refresh_token': refreshToken,
                 });
@@ -53,7 +56,7 @@ class DioClient {
                     // Update header and retry the original request
                     final options = error.requestOptions;
                     options.headers['Authorization'] = 'Bearer $newAccessToken';
-                    
+
                     final retryResponse = await dio.fetch(options);
                     return handler.resolve(retryResponse);
                   }

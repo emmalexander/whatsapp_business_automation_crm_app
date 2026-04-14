@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/onboarding/onboarding_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/theme.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
 
-void main() {
   runApp(
     const ProviderScope(
       child: LedgeCRMApp(),
