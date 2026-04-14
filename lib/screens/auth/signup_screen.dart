@@ -1,3 +1,5 @@
+import 'package:whatsapp_business_automation_crm_app/services/location_service.dart';
+
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,10 +37,16 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   @override
   void initState() {
     super.initState();
-    // Use the device locale to pick a sensible default country.
-    final localeCountryCode =
-        WidgetsBinding.instance.platformDispatcher.locale.countryCode ?? 'NG';
-    _selectedCountry = _countryFromCode(localeCountryCode);
+    // Default to Nigeria while the IP lookup is in progress.
+    _selectedCountry = CountryParser.parseCountryCode('NG');
+  }
+
+  /// Looks up the user's country via get_country_ip and updates the selector.
+  Future<void> _fetchCountryFromIP() async {
+    final code = await LocationService.fetchCountryCode();
+    if (code != null && mounted) {
+      setState(() => _selectedCountry = _countryFromCode(code));
+    }
   }
 
   /// Returns a [Country] matching [isoCode], falling back to Nigeria.
@@ -48,6 +56,12 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     } catch (_) {
       return CountryParser.parseCountryCode('NG');
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    //_fetchCountryFromIP();
   }
 
   @override
@@ -76,7 +90,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   }
 
   String? _validateEmail(String? value) {
-    if (value == null || value.trim().isEmpty) return 'Email address is required';
+    if (value == null || value.trim().isEmpty)
+      return 'Email address is required';
     if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(value.trim())) {
       return 'Please enter a valid email address';
     }
@@ -84,7 +99,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   }
 
   String? _validatePhone(String? value) {
-    if (value == null || value.trim().isEmpty) return 'Phone number is required';
+    if (value == null || value.trim().isEmpty)
+      return 'Phone number is required';
     final digits = value.trim().replaceAll(' ', '');
     if (!RegExp(r'^\d{6,14}$').hasMatch(digits)) {
       return 'Enter a valid phone number (digits only)';
@@ -150,7 +166,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     } catch (e) {
       if (mounted) {
         ToastUtil.showError(
-            context, e.toString().replaceFirst('Exception: ', ''));
+          context,
+          e.toString().replaceFirst('Exception: ', ''),
+        );
       }
     }
   }
@@ -165,13 +183,18 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       countryListTheme: CountryListThemeData(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         inputDecoration: InputDecoration(
-          prefixIcon: const Icon(Icons.search_rounded, color: AppTheme.textGrey),
+          prefixIcon: const Icon(
+            Icons.search_rounded,
+            color: AppTheme.textGrey,
+          ),
           hintText: 'Search country…',
           hintStyle: const TextStyle(color: AppTheme.textLightGrey),
           filled: true,
           fillColor: AppTheme.background,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 14,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(color: Colors.grey.shade300),
@@ -182,17 +205,16 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide:
-                const BorderSide(color: AppTheme.primaryGreen, width: 1.5),
+            borderSide: const BorderSide(
+              color: AppTheme.primaryGreen,
+              width: 1.5,
+            ),
           ),
         ),
         searchTextStyle: const TextStyle(color: AppTheme.textDark),
         flagSize: 24,
         backgroundColor: Colors.white,
-        textStyle: const TextStyle(
-          color: AppTheme.textDark,
-          fontSize: 14,
-        ),
+        textStyle: const TextStyle(color: AppTheme.textDark, fontSize: 14),
         bottomSheetHeight: MediaQuery.of(context).size.height * 0.72,
       ),
       onSelect: (Country country) {
@@ -213,15 +235,16 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppTheme.textDark),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppTheme.textDark,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -236,9 +259,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 const SizedBox(height: 8),
                 Text(
                   'Join LedgeCRM today',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppTheme.textGrey,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge?.copyWith(color: AppTheme.textGrey),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 36),
@@ -340,7 +363,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       color: AppTheme.textGrey,
                     ),
                     onPressed: () => setState(
-                        () => _showConfirmPassword = !_showConfirmPassword),
+                      () => _showConfirmPassword = !_showConfirmPassword,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 36),
@@ -363,11 +387,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       onPressed: () => Navigator.of(context).pop(),
                       child: Text(
                         'Sign In',
-                        style:
-                            Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: AppTheme.primaryGreen,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppTheme.primaryGreen,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],
@@ -405,19 +428,16 @@ class _PhoneField extends StatelessWidget {
         Text(
           'Phone Number',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: AppTheme.textDark,
-              ),
+            fontWeight: FontWeight.w600,
+            color: AppTheme.textDark,
+          ),
         ),
         const SizedBox(height: 8),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ── Country selector button ─────────────────────────────────────
-            _CountryDialButton(
-              country: selectedCountry,
-              onTap: onPickCountry,
-            ),
+            _CountryDialButton(country: selectedCountry, onTap: onPickCountry),
             const SizedBox(width: 10),
 
             // ── Number input ────────────────────────────────────────────────
@@ -433,8 +453,8 @@ class _PhoneField extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: 'e.g. 8012345678',
                   hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppTheme.textLightGrey,
-                      ),
+                    color: AppTheme.textLightGrey,
+                  ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 16,
@@ -452,7 +472,9 @@ class _PhoneField extends StatelessWidget {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: const BorderSide(
-                        color: AppTheme.primaryGreen, width: 1.5),
+                      color: AppTheme.primaryGreen,
+                      width: 1.5,
+                    ),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -496,21 +518,21 @@ class _CountryDialButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             // Emoji flag
-            Text(
-              country.flagEmoji,
-              style: const TextStyle(fontSize: 22),
-            ),
+            Text(country.flagEmoji, style: const TextStyle(fontSize: 22)),
             const SizedBox(width: 6),
             Text(
               '+${country.phoneCode}',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.textDark,
-                  ),
+                fontWeight: FontWeight.w600,
+                color: AppTheme.textDark,
+              ),
             ),
             const SizedBox(width: 4),
-            const Icon(Icons.keyboard_arrow_down_rounded,
-                size: 18, color: AppTheme.textGrey),
+            const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              size: 18,
+              color: AppTheme.textGrey,
+            ),
           ],
         ),
       ),
