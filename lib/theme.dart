@@ -20,7 +20,7 @@ class AppTheme {
       colorScheme: const ColorScheme.light(
         primary: primaryGreen,
         secondary: secondaryGreen,
-        background: background,
+        surface: background,
       ),
       textTheme: GoogleFonts.interTextTheme().copyWith(
         displayLarge: GoogleFonts.inter(

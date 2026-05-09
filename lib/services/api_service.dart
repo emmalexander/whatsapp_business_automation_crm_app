@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:whatsapp_business_automation_crm_app/core/network_exception_handler.dart';
 import 'package:whatsapp_business_automation_crm_app/services/dio_client.dart';
 import 'package:whatsapp_business_automation_crm_app/services/token_storage_service.dart';
 
@@ -12,9 +13,11 @@ class ApiService {
   // ---------------------------------------------------------------------------
   Future<void> signUp(Map<String, dynamic> data) async {
     try {
+      //print("Sign Up Data: ${data}");
       await _dio.post('/auth/sign-up', data: data);
     } on DioException catch (e) {
-      throw Exception(_extractMessage(e, 'Sign up failed'));
+      throw NetworkExceptionHandler.handleApiException(e);
+      //throw Exception(_extractMessage(e, 'Sign up failed'));
     }
   }
 
@@ -24,14 +27,16 @@ class ApiService {
   // ---------------------------------------------------------------------------
   Future<void> signIn(String email, String password) async {
     try {
-      final response = await _dio.post('/auth/sign-in', data: {
-        'email': email,
-        'password': password,
-      });
+      final response = await _dio.post(
+        '/auth/sign-in',
+        data: {'email': email, 'password': password},
+      );
 
       if (response.statusCode == 200 && response.data != null) {
-        final accessToken = response.data['accessToken'] ?? response.data['access_token'];
-        final refreshToken = response.data['refreshToken'] ?? response.data['refresh_token'];
+        final accessToken =
+            response.data['accessToken'] ?? response.data['access_token'];
+        final refreshToken =
+            response.data['refreshToken'] ?? response.data['refresh_token'];
 
         if (accessToken != null && refreshToken != null) {
           await _tokenStorage.saveTokens(
@@ -58,12 +63,14 @@ class ApiService {
   // ---------------------------------------------------------------------------
   Future<void> verifyEmail(String email, String code) async {
     try {
-      await _dio.post('/auth/verify-email', data: {
-        'email': email,
-        'code': code,
-      });
+      await _dio.post(
+        '/auth/verify-email',
+        data: {'email': email, 'code': code},
+      );
     } on DioException catch (e) {
-      throw Exception(_extractMessage(e, 'Invalid or expired verification code'));
+      throw Exception(
+        _extractMessage(e, 'Invalid or expired verification code'),
+      );
     }
   }
 
@@ -101,11 +108,10 @@ class ApiService {
     required String newPassword,
   }) async {
     try {
-      await _dio.post('/auth/verify-password-reset', data: {
-        'email': email,
-        'code': code,
-        'newPassword': newPassword,
-      });
+      await _dio.post(
+        '/auth/verify-password-reset',
+        data: {'email': email, 'code': code, 'newPassword': newPassword},
+      );
     } on DioException catch (e) {
       throw Exception(_extractMessage(e, 'Invalid or expired reset code'));
     }

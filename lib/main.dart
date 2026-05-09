@@ -8,11 +8,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
 
-  runApp(
-    const ProviderScope(
-      child: LedgeCRMApp(),
-    ),
-  );
+  runApp(ProviderScope(child: LedgeCRMApp()));
 }
 
 class LedgeCRMApp extends StatelessWidget {
@@ -20,11 +16,14 @@ class LedgeCRMApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'LedgeCRM',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      home: const OnboardingScreen(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: MaterialApp(
+        title: 'LedgeCRM',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        home: const OnboardingScreen(),
+      ),
     );
   }
 }

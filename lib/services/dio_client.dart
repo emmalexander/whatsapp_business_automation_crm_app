@@ -14,11 +14,13 @@ class DioClient {
   DioClient._internal() {
     final baseUrl = dotenv.env['BASE_URL'] ?? 'http://localhost:3000/api/v1';
 
-    dio = Dio(BaseOptions(
-      baseUrl: baseUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-    ));
+    dio = Dio(
+      BaseOptions(
+        baseUrl: baseUrl,
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 10),
+      ),
+    );
 
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -37,11 +39,14 @@ class DioClient {
             if (refreshToken != null) {
               try {
                 // Use a standard dio instance to avoid recursive retries from the interceptor
-                final refreshDio = Dio(BaseOptions(baseUrl: dio.options.baseUrl));
+                final refreshDio = Dio(
+                  BaseOptions(baseUrl: dio.options.baseUrl),
+                );
 
-                final response = await refreshDio.post('/auth/refresh-token', data: {
-                  'refresh_token': refreshToken,
-                });
+                final response = await refreshDio.post(
+                  '/auth/refresh-token',
+                  data: {'refresh_token': refreshToken},
+                );
 
                 if (response.statusCode == 200 && response.data != null) {
                   final newAccessToken = response.data['access_token'];
@@ -63,11 +68,15 @@ class DioClient {
                 }
               } on DioException catch (_) {
                 // Refresh token failed, clear tokens and let the error pass through
+                print('Clear 1');
                 await _tokenStorage.clearTokens();
+                print('Cleared 1');
               }
             } else {
+              print('Clear 2');
               // No refresh token available, clear tokens
               await _tokenStorage.clearTokens();
+              print('Cleared 2');
             }
           }
           return handler.next(error);

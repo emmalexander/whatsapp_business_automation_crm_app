@@ -302,7 +302,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: const Color(0xFF13BA5E),
+            activeThumbColor: const Color(0xFF13BA5E),
           ),
         ],
       ),

@@ -15,7 +15,12 @@ class ToastUtil {
     _showToast(context, message, Colors.blueAccent, Icons.info);
   }
 
-  static void _showToast(BuildContext context, String message, Color color, IconData icon) {
+  static void _showToast(
+    BuildContext context,
+    String message,
+    Color color,
+    IconData icon,
+  ) {
     final overlayState = Overlay.of(context);
     late OverlayEntry overlayEntry;
 
@@ -33,10 +38,7 @@ class ToastUtil {
             builder: (context, value, child) {
               return Transform.translate(
                 offset: Offset(0, -50 * (1 - value)),
-                child: Opacity(
-                  opacity: value,
-                  child: child,
-                ),
+                child: child,
               );
             },
             child: Container(
@@ -61,9 +63,9 @@ class ToastUtil {
                     child: Text(
                       message,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: AppTheme.textDark,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        color: AppTheme.textDark,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],

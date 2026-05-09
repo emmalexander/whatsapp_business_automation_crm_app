@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
   final void Function(String)? onChanged;
+  final TextInputAction? textInputAction;
 
   const CustomTextField({
     super.key,
@@ -30,6 +31,7 @@ class CustomTextField extends StatelessWidget {
     this.inputFormatters,
     this.maxLength,
     this.onChanged,
+    this.textInputAction,
   });
 
   @override
@@ -40,15 +42,16 @@ class CustomTextField extends StatelessWidget {
         Text(
           labelText,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: AppTheme.textDark,
-              ),
+            fontWeight: FontWeight.w600,
+            color: AppTheme.textDark,
+          ),
         ),
         const SizedBox(height: 8),
         TextFormField(
           controller: controller,
           obscureText: obscureText,
           keyboardType: keyboardType,
+          textInputAction: textInputAction,
           style: Theme.of(context).textTheme.bodyLarge,
           validator: validator,
           textCapitalization: textCapitalization,
@@ -57,9 +60,9 @@ class CustomTextField extends StatelessWidget {
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppTheme.textLightGrey,
-                ),
+            hintStyle: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: AppTheme.textLightGrey),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 16,
@@ -77,7 +80,10 @@ class CustomTextField extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppTheme.primaryGreen, width: 1.5),
+              borderSide: const BorderSide(
+                color: AppTheme.primaryGreen,
+                width: 1.5,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

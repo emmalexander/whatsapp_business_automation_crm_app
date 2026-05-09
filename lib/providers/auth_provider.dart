@@ -19,6 +19,8 @@ class AuthNotifier extends StateNotifier<bool> {
     state = true;
     try {
       await _apiService.signUp(data);
+    } catch (e) {
+      rethrow;
     } finally {
       state = false;
     }

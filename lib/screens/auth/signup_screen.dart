@@ -90,8 +90,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   }
 
   String? _validateEmail(String? value) {
-    if (value == null || value.trim().isEmpty)
+    if (value == null || value.trim().isEmpty) {
       return 'Email address is required';
+    }
     if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(value.trim())) {
       return 'Please enter a valid email address';
     }
@@ -99,8 +100,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   }
 
   String? _validatePhone(String? value) {
-    if (value == null || value.trim().isEmpty)
+    if (value == null || value.trim().isEmpty) {
       return 'Phone number is required';
+    }
     final digits = value.trim().replaceAll(' ', '');
     if (!RegExp(r'^\d{6,14}$').hasMatch(digits)) {
       return 'Enter a valid phone number (digits only)';
@@ -276,6 +278,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         hintText: 'John',
                         controller: _firstNameController,
                         textCapitalization: TextCapitalization.words,
+                        textInputAction: TextInputAction.next,
                         validator: (v) => _validateName(v, 'First name'),
                       ),
                     ),
@@ -286,6 +289,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         hintText: 'Doe',
                         controller: _lastNameController,
                         textCapitalization: TextCapitalization.words,
+                        textInputAction: TextInputAction.next,
                         validator: (v) => _validateName(v, 'Last name'),
                       ),
                     ),
@@ -299,6 +303,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   hintText: 'James',
                   controller: _middleNameController,
                   textCapitalization: TextCapitalization.words,
+                  textInputAction: TextInputAction.next,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) return null;
                     if (!RegExp(r"^[a-zA-Z\s'-]+$").hasMatch(value.trim())) {
@@ -315,6 +320,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   controller: _phoneController,
                   onPickCountry: _openCountryPicker,
                   validator: _validatePhone,
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(height: 20),
 
@@ -324,6 +330,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   hintText: 'john.doe@example.com',
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
+                  textInputAction: TextInputAction.next,
                   validator: _validateEmail,
                 ),
                 const SizedBox(height: 20),
@@ -335,6 +342,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   obscureText: !_showPassword,
                   controller: _passwordController,
                   validator: _validatePassword,
+                  textInputAction: TextInputAction.next,
                   suffixIcon: IconButton(
                     icon: Icon(
                       _showPassword
@@ -355,6 +363,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   obscureText: !_showConfirmPassword,
                   controller: _confirmPasswordController,
                   validator: _validateConfirmPassword,
+                  textInputAction: TextInputAction.done,
                   suffixIcon: IconButton(
                     icon: Icon(
                       _showConfirmPassword
@@ -412,12 +421,14 @@ class _PhoneField extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onPickCountry;
   final String? Function(String?)? validator;
+  final TextInputAction? textInputAction;
 
   const _PhoneField({
     required this.selectedCountry,
     required this.controller,
     required this.onPickCountry,
     this.validator,
+    this.textInputAction,
   });
 
   @override
@@ -447,6 +458,7 @@ class _PhoneField extends StatelessWidget {
                 keyboardType: TextInputType.phone,
                 style: Theme.of(context).textTheme.bodyLarge,
                 validator: validator,
+                textInputAction: textInputAction,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'[\d\s]')),
                 ],
