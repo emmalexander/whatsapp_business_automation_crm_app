@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:whatsapp_business_automation_crm_app/providers/user_provider.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/profile/profile_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/utils/logo_painter.dart';
 
 import 'package:whatsapp_business_automation_crm_app/widgets/app_drawer.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userState = ref.watch(userProvider);
+    final user = userState.user;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9FB),
       drawer: const AppDrawer(currentIndex: 0),
@@ -94,7 +99,7 @@ class DashboardScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Good morning, Alex.',
+              'Good morning, ${user?.data.user.firstName ?? ""}',
               style: GoogleFonts.inter(
                 fontSize: 28,
                 fontWeight: FontWeight.w700,

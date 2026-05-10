@@ -4,10 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/main_navigation.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/subscription/upgrade_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/profile/profile_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/utils/logo_painter.dart';
 
 class AppDrawer extends StatelessWidget {
   final int currentIndex;
-  
+
   const AppDrawer({super.key, required this.currentIndex});
 
   @override
@@ -32,7 +33,10 @@ class AppDrawer extends StatelessWidget {
                           color: const Color(0xFF13BA5E),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Icon(Icons.flash_on, color: Colors.white, size: 20),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: CustomPaint(painter: LogoPainter()),
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Text(
@@ -90,9 +94,14 @@ class AppDrawer extends StatelessWidget {
                   onTapOverride: () {
                     Navigator.pop(context); // Close drawer
                     if (currentIndex != 6) {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ProfileScreen(),
+                        ),
+                      );
                     }
-                  }
+                  },
                 ),
                 _buildDrawerItem(
                   context,
@@ -102,9 +111,14 @@ class AppDrawer extends StatelessWidget {
                   onTapOverride: () {
                     Navigator.pop(context); // Close drawer
                     if (currentIndex != 5) {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const UpgradeScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const UpgradeScreen(),
+                        ),
+                      );
                     }
-                  }
+                  },
                 ),
               ],
             ),
@@ -117,7 +131,11 @@ class AppDrawer extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    const Icon(Icons.logout, color: Color(0xFF9E3F29), size: 20),
+                    const Icon(
+                      Icons.logout,
+                      color: Color(0xFF9E3F29),
+                      size: 20,
+                    ),
                     const SizedBox(width: 16),
                     Text(
                       'Sign Out',
@@ -139,25 +157,29 @@ class AppDrawer extends StatelessWidget {
 
   Widget _buildDrawerItem(
     BuildContext context, {
-    required IconData icon, 
-    required String title, 
-    required int index, 
+    required IconData icon,
+    required String title,
+    required int index,
     VoidCallback? onTapOverride,
   }) {
     final bool isActive = currentIndex == index;
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
       child: InkWell(
-        onTap: onTapOverride ?? () {
-          Navigator.pop(context); // Close drawer
-          if (!isActive) {
-            Navigator.pushReplacement(
-              context, 
-              MaterialPageRoute(builder: (_) => MainNavigation(initialIndex: index))
-            );
-          }
-        },
+        onTap:
+            onTapOverride ??
+            () {
+              Navigator.pop(context); // Close drawer
+              if (!isActive) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => MainNavigation(initialIndex: index),
+                  ),
+                );
+              }
+            },
         borderRadius: BorderRadius.circular(12),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
@@ -169,7 +191,9 @@ class AppDrawer extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isActive ? const Color(0xFF10B96B) : const Color(0xFF5A6678),
+                color: isActive
+                    ? const Color(0xFF10B96B)
+                    : const Color(0xFF5A6678),
                 size: 20,
               ),
               const SizedBox(width: 16),
@@ -178,7 +202,9 @@ class AppDrawer extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontSize: 14,
                   fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
-                  color: isActive ? const Color(0xFF10B96B) : const Color(0xFF5A6678),
+                  color: isActive
+                      ? const Color(0xFF10B96B)
+                      : const Color(0xFF5A6678),
                 ),
               ),
             ],

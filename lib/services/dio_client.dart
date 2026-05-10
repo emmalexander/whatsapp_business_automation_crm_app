@@ -45,12 +45,12 @@ class DioClient {
 
                 final response = await refreshDio.post(
                   '/auth/refresh-token',
-                  data: {'refresh_token': refreshToken},
+                  data: {'refreshToken': refreshToken},
                 );
 
                 if (response.statusCode == 200 && response.data != null) {
-                  final newAccessToken = response.data['access_token'];
-                  final newRefreshToken = response.data['refresh_token'];
+                  final newAccessToken = response.data['data']['accessToken'];
+                  final newRefreshToken = response.data['data']['refreshToken'];
 
                   if (newAccessToken != null) {
                     await _tokenStorage.saveTokens(
@@ -68,15 +68,11 @@ class DioClient {
                 }
               } on DioException catch (_) {
                 // Refresh token failed, clear tokens and let the error pass through
-                print('Clear 1');
                 await _tokenStorage.clearTokens();
-                print('Cleared 1');
               }
             } else {
-              print('Clear 2');
               // No refresh token available, clear tokens
               await _tokenStorage.clearTokens();
-              print('Cleared 2');
             }
           }
           return handler.next(error);
