@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_business_automation_crm_app/providers/user_provider.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/dashboard/dashboard_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/leads/leads_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/pipeline/pipeline_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/templates/templates_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/analytics/analytics_screen.dart';
 
-class MainNavigation extends StatefulWidget {
+class MainNavigation extends ConsumerStatefulWidget {
   final int initialIndex;
   const MainNavigation({super.key, this.initialIndex = 0});
 
   @override
-  State<MainNavigation> createState() => _MainNavigationState();
+  ConsumerState<MainNavigation> createState() => _MainNavigationState();
 }
 
-class _MainNavigationState extends State<MainNavigation> {
+class _MainNavigationState extends ConsumerState<MainNavigation> {
   late int _currentIndex;
 
   final List<Widget> _screens = [
@@ -28,6 +30,9 @@ class _MainNavigationState extends State<MainNavigation> {
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(userProvider.notifier).getUser();
+    });
   }
 
   @override

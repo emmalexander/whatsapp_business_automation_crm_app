@@ -8,6 +8,7 @@ import 'package:whatsapp_business_automation_crm_app/providers/auth_provider.dar
 import 'package:whatsapp_business_automation_crm_app/screens/auth/otp_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/theme.dart';
 import 'package:whatsapp_business_automation_crm_app/utils/toast_util.dart';
+import 'package:whatsapp_business_automation_crm_app/widgets/app_logo.dart';
 import 'package:whatsapp_business_automation_crm_app/widgets/custom_text_field.dart';
 import 'package:whatsapp_business_automation_crm_app/widgets/loading_button.dart';
 
@@ -38,7 +39,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   void initState() {
     super.initState();
     // Default to Nigeria while the IP lookup is in progress.
-    _selectedCountry = CountryParser.parseCountryCode('NG');
+    _selectedCountry = CountryParser.parseCountryCode('US');
   }
 
   /// Looks up the user's country via get_country_ip and updates the selector.
@@ -46,6 +47,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final code = await LocationService.fetchCountryCode();
     if (code != null && mounted) {
       setState(() => _selectedCountry = _countryFromCode(code));
+    } else {
+      setState(() => _selectedCountry = _countryFromCode('NG'));
     }
   }
 
@@ -61,7 +64,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    //_fetchCountryFromIP();
+    _fetchCountryFromIP();
   }
 
   @override
@@ -253,6 +256,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // ── Header ───────────────────────────────────────────────────
+                const AppLogo(),
+                const SizedBox(height: 24),
                 Text(
                   'Create Account',
                   style: Theme.of(context).textTheme.headlineLarge,

@@ -31,7 +31,7 @@ class NetworkExceptionHandler {
           if (error.response!.data != null &&
               error.response!.data.toString().isNotEmpty) {
             log(
-              'Begin ${error.response!.data.toString()} ${error.response!.data.toString().length}  ${error.response!.statusCode}',
+              'Begin ${error.response!.data.toString()} || ${error.response!.statusCode}',
             );
             if (error.response!.data is List) {
               log('Bad request ${error.response!.data.toString()}');

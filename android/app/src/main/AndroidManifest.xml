@@ -2,7 +2,7 @@
  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
-        android:label="whatsapp_business_automation_crm_app"
+        android:label="LedgeCRM"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

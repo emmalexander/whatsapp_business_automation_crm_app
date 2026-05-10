@@ -16,6 +16,8 @@ class CustomTextField extends StatelessWidget {
   final int? maxLength;
   final void Function(String)? onChanged;
   final TextInputAction? textInputAction;
+  final List<String>? autofillHints;
+  final Function()?  onEditingComplete;
 
   const CustomTextField({
     super.key,
@@ -31,7 +33,7 @@ class CustomTextField extends StatelessWidget {
     this.inputFormatters,
     this.maxLength,
     this.onChanged,
-    this.textInputAction,
+    this.textInputAction, this.autofillHints, this.onEditingComplete,
   });
 
   @override

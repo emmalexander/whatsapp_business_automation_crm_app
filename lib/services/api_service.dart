@@ -1,5 +1,11 @@
+// ignore_for_file: unused_import
+
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:whatsapp_business_automation_crm_app/core/network_exception_handler.dart';
+import 'package:whatsapp_business_automation_crm_app/models/user_model.dart';
 import 'package:whatsapp_business_automation_crm_app/services/dio_client.dart';
 import 'package:whatsapp_business_automation_crm_app/services/token_storage_service.dart';
 
@@ -33,10 +39,8 @@ class ApiService {
       );
 
       if (response.statusCode == 200 && response.data != null) {
-        final accessToken =
-            response.data['accessToken'] ?? response.data['access_token'];
-        final refreshToken =
-            response.data['refreshToken'] ?? response.data['refresh_token'];
+        final accessToken = response.data['data']['accessToken'] ?? "";
+        final refreshToken = response.data['data']['refreshToken'] ?? "";
 
         if (accessToken != null && refreshToken != null) {
           await _tokenStorage.saveTokens(
@@ -50,10 +54,16 @@ class ApiService {
     } on DioException catch (e) {
       if (e.response?.statusCode == 403) {
         throw UnverifiedEmailException(
-          _extractMessage(e, 'Email not verified. Please check your inbox.'),
+          _extractMessage(
+            e,
+            'Email not verified. Please verify your email before signing in.',
+          ),
         );
       }
-      throw Exception(_extractMessage(e, 'Invalid credentials'));
+
+      throw NetworkExceptionHandler.handleApiException(e);
+
+      // throw Exception(_extractMessage(e, 'Invalid credentials'));
     }
   }
 
@@ -65,12 +75,13 @@ class ApiService {
     try {
       await _dio.post(
         '/auth/verify-email',
-        data: {'email': email, 'code': code},
+        data: {'email': email, 'otp': code},
       );
     } on DioException catch (e) {
-      throw Exception(
-        _extractMessage(e, 'Invalid or expired verification code'),
-      );
+      throw NetworkExceptionHandler.handleApiException(e);
+      // throw Exception(
+      //   _extractMessage(e, 'Invalid or expired verification code'),
+      // );
     }
   }
 
@@ -82,7 +93,8 @@ class ApiService {
     try {
       await _dio.post('/auth/resend-verification', data: {'email': email});
     } on DioException catch (e) {
-      throw Exception(_extractMessage(e, 'Failed to resend verification code'));
+      throw NetworkExceptionHandler.handleApiException(e);
+      //throw Exception(_extractMessage(e, 'Failed to resend verification code'));
     }
   }
 
@@ -94,7 +106,8 @@ class ApiService {
     try {
       await _dio.post('/auth/request-password-reset', data: {'email': email});
     } on DioException catch (e) {
-      throw Exception(_extractMessage(e, 'Failed to request password reset'));
+      throw NetworkExceptionHandler.handleApiException(e);
+      //throw Exception(_extractMessage(e, 'Failed to request password reset'));
     }
   }
 
@@ -113,7 +126,71 @@ class ApiService {
         data: {'email': email, 'code': code, 'newPassword': newPassword},
       );
     } on DioException catch (e) {
-      throw Exception(_extractMessage(e, 'Invalid or expired reset code'));
+      throw NetworkExceptionHandler.handleApiException(e);
+      //throw Exception(_extractMessage(e, 'Invalid or expired reset code'));
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Auth: Sign Out
+  // POST /auth/sign-out
+  // ---------------------------------------------------------------------------
+  Future<void> signOut() async {
+    try {
+      await _dio.post('/auth/sign-out');
+    } on DioException catch (e) {
+      throw NetworkExceptionHandler.handleApiException(e);
+    } finally {
+      // Always clear tokens locally, even if the server call fails.
+      await _tokenStorage.clearTokens();
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Users: Get Current User
+  // GET /users/
+  // ---------------------------------------------------------------------------
+  Future<UserModel> getUser() async {
+    try {
+      final response = await _dio.get('/users/');
+      final data = response.data;
+      if (data is Map<String, dynamic>) {
+        return UserModel.fromJson(data);
+      }
+      throw Failure('Unexpected response format');
+    } on DioException catch (e) {
+      throw NetworkExceptionHandler.handleApiException(e);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Users: Update Current User
+  // PUT /users/
+  // ---------------------------------------------------------------------------
+  Future<UserModel> updateUser(Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.put('/users/', data: data);
+      final responseData = response.data;
+      if (responseData is Map<String, dynamic>) {
+        return UserModel.fromJson(responseData);
+      }
+      throw Failure('Unexpected response format');
+    } on DioException catch (e) {
+      throw NetworkExceptionHandler.handleApiException(e);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Users: Delete Current User
+  // DELETE /users/
+  // ---------------------------------------------------------------------------
+  Future<void> deleteUser() async {
+    try {
+      await _dio.delete('/users/');
+    } on DioException catch (e) {
+      throw NetworkExceptionHandler.handleApiException(e);
+    } finally {
+      await _tokenStorage.clearTokens();
     }
   }
 

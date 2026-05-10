@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/onboarding/onboarding_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/screens/splash/splash_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
 
-  runApp(ProviderScope(child: LedgeCRMApp()));
+  runApp(const ProviderScope(child: LedgeCRMApp()));
 }
 
 class LedgeCRMApp extends StatelessWidget {
@@ -22,7 +22,7 @@ class LedgeCRMApp extends StatelessWidget {
         title: 'LedgeCRM',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        home: const OnboardingScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:whatsapp_business_automation_crm_app/screens/auth/login_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/widgets/app_logo.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -49,34 +50,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: Column(
           children: [
             const SizedBox(height: 32),
-            // Logo
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF13BA5E),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: CustomPaint(painter: LogoPainter()),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  'LedgeCRM',
-                  style: GoogleFonts.inter(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF141A25),
-                    letterSpacing: -0.5,
-                  ),
-                ),
-              ],
-            ),
+            const AppLogo(),
             const SizedBox(height: 48),
             Expanded(
               child: PageView(
@@ -706,47 +680,4 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
-// Logo custom painter to match the shapes in the LedgeCRM logo (intersecting rectangles/squares)
-class LogoPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint1 = Paint()..color = Colors.white;
-    // Left shape
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, size.width * 0.4, size.height * 0.7),
-        const Radius.circular(2),
-      ),
-      paint1,
-    );
-    // Right shape
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(
-          size.width * 0.5,
-          size.height * 0.3,
-          size.width * 0.5,
-          size.height * 0.7,
-        ),
-        const Radius.circular(2),
-      ),
-      paint1,
-    );
-    // Overlap shape
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(
-          size.width * 0.3,
-          size.height * 0.4,
-          size.width * 0.4,
-          size.height * 0.2,
-        ),
-        const Radius.circular(2),
-      ),
-      paint1,
-    );
-  }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}

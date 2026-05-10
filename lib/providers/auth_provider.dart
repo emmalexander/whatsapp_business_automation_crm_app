@@ -83,6 +83,18 @@ class AuthNotifier extends StateNotifier<bool> {
       state = false;
     }
   }
+
+  // Sign Out
+  Future<void> signOut() async {
+    state = true;
+    try {
+      await _apiService.signOut();
+    } catch (_) {
+      // Tokens are always cleared by ApiService even on error.
+    } finally {
+      state = false;
+    }
+  }
 }
 
 final authProvider = StateNotifierProvider<AuthNotifier, bool>((ref) {

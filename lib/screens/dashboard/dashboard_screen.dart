@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/profile/profile_screen.dart';
+import 'package:whatsapp_business_automation_crm_app/utils/logo_painter.dart';
 
 import 'package:whatsapp_business_automation_crm_app/widgets/app_drawer.dart';
 
@@ -31,11 +32,10 @@ class DashboardScreen extends StatelessWidget {
                 color: const Color(0xFF13BA5E),
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: const Icon(
-                Icons.dashboard,
-                color: Colors.white,
-                size: 14,
-              ), // placeholder for logo
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: CustomPaint(painter: LogoPainter()),
+              ),
             ),
             Text(
               'LedgeCRM',
