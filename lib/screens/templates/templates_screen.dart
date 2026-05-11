@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:whatsapp_business_automation_crm_app/widgets/app_bar_logo.dart';
 
 import 'package:whatsapp_business_automation_crm_app/widgets/app_drawer.dart';
 
@@ -18,29 +19,17 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9FB),
-      drawer: const AppDrawer(currentIndex: 3),
+      //drawer: const AppDrawer(currentIndex: 3),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF9F9FB),
         elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: Color(0xFF141A25)),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: Row(
-          children: [
-            Text(
-              'LedgeCRM',
-              style: GoogleFonts.inter(
-                color: const Color(0xFF0F9D58),
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                letterSpacing: -0.5,
-              ),
-            ),
-          ],
-        ),
+        // leading: Builder(
+        //   builder: (context) => IconButton(
+        //     icon: const Icon(Icons.menu, color: Color(0xFF141A25)),
+        //     onPressed: () => Scaffold.of(context).openDrawer(),
+        //   ),
+        // ),
+        title: AppBarLogo(),
         actions: [
           const Padding(
             padding: EdgeInsets.only(right: 16.0),
@@ -125,7 +114,8 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
                 tagBgCol: const Color(0xFFD3DCF6),
                 tagTextCol: const Color(0xFF3B507C),
                 title: 'Initial Discovery',
-                text: '"Hi {{name}}, thanks for reaching out! I\'d love to learn more about your project needs. Do you have 10 minutes for a quick call today?"',
+                text:
+                    '"Hi {{name}}, thanks for reaching out! I\'d love to learn more about your project needs. Do you have 10 minutes for a quick call today?"',
                 borderCol: const Color(0xFF13753F),
               ),
 
@@ -135,7 +125,8 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
                 tagBgCol: const Color(0xFFF0987D),
                 tagTextCol: const Color(0xFF7A2011),
                 title: 'Standard Quote',
-                text: '"Based on our discussion, the estimated investment for the {{service_type}} package is \${{amount}}. This includes full support and implementation."',
+                text:
+                    '"Based on our discussion, the estimated investment for the {{service_type}} package is \${{amount}}. This includes full support and implementation."',
                 borderCol: const Color(0xFFB54D31),
               ),
 
@@ -145,7 +136,8 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
                 tagBgCol: const Color(0xFFD3DCF6),
                 tagTextCol: const Color(0xFF3B507C),
                 title: 'Gentle Re-engagement',
-                text: '"Just circling back to see if you had any more thoughts on the proposal I sent last week? Happy to clarify any points!"',
+                text:
+                    '"Just circling back to see if you had any more thoughts on the proposal I sent last week? Happy to clarify any points!"',
                 borderCol: const Color(0xFF5A6678),
               ),
 
@@ -155,7 +147,8 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
                 tagBgCol: const Color(0xFF6EFA89),
                 tagTextCol: const Color(0xFF0C7D38),
                 title: 'Onboarding Next Steps',
-                text: '"Great news! Everything is ready. Here is your unique onboarding link: {{onboarding_url}}. Welcome aboard!"',
+                text:
+                    '"Great news! Everything is ready. Here is your unique onboarding link: {{onboarding_url}}. Welcome aboard!"',
                 borderCol: const Color(0xFF10C05C),
               ),
 
@@ -273,7 +266,9 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: text));
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Template copied to clipboard')),
+                      const SnackBar(
+                        content: Text('Template copied to clipboard'),
+                      ),
                     );
                   },
                   child: Container(
@@ -285,7 +280,11 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.copy, size: 14, color: Color(0xFF141A25)),
+                        const Icon(
+                          Icons.copy,
+                          size: 14,
+                          color: Color(0xFF141A25),
+                        ),
                         const SizedBox(width: 8),
                         Text(
                           'COPY',

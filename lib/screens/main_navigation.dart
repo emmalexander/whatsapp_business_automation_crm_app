@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_business_automation_crm_app/providers/user_provider.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/dashboard/dashboard_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/leads/leads_screen.dart';
-import 'package:whatsapp_business_automation_crm_app/screens/pipeline/pipeline_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/templates/templates_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/analytics/analytics_screen.dart';
 
@@ -21,7 +20,7 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
   final List<Widget> _screens = [
     const DashboardScreen(),
     const LeadsScreen(),
-    const PipelineScreen(),
+    //const PipelineScreen(),
     const TemplatesScreen(),
     const AnalyticsScreen(),
   ];
@@ -76,12 +75,16 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
                 child: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: _currentIndex == 0 ? const Color(0xFFE8F8F0) : Colors.transparent,
+                    color: _currentIndex == 0
+                        ? const Color(0xFFE8F8F0)
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     Icons.dashboard_rounded,
-                    color: _currentIndex == 0 ? const Color(0xFF10B96B) : const Color(0xFF9CA3AF),
+                    color: _currentIndex == 0
+                        ? const Color(0xFF10B96B)
+                        : const Color(0xFF9CA3AF),
                   ),
                 ),
               ),
@@ -93,46 +96,54 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
                 child: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: _currentIndex == 1 ? const Color(0xFFE8F8F0) : Colors.transparent,
+                    color: _currentIndex == 1
+                        ? const Color(0xFFE8F8F0)
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     Icons.person_pin_rounded,
-                    color: _currentIndex == 1 ? const Color(0xFF10B96B) : const Color(0xFF9CA3AF),
+                    color: _currentIndex == 1
+                        ? const Color(0xFF10B96B)
+                        : const Color(0xFF9CA3AF),
                   ),
                 ),
               ),
               label: 'LEADS',
             ),
+            // BottomNavigationBarItem(
+            //   icon: Padding(
+            //     padding: const EdgeInsets.only(bottom: 4.0),
+            //     child: Container(
+            //       padding: const EdgeInsets.all(6),
+            //       decoration: BoxDecoration(
+            //         color: _currentIndex == 2 ? const Color(0xFFE8F8F0) : Colors.transparent,
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //       child: Icon(
+            //         Icons.account_tree_outlined,
+            //         color: _currentIndex == 2 ? const Color(0xFF10B96B) : const Color(0xFF9CA3AF),
+            //       ),
+            //     ),
+            //   ),
+            //   label: 'PIPELINE',
+            // ),
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(bottom: 4.0),
                 child: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: _currentIndex == 2 ? const Color(0xFFE8F8F0) : Colors.transparent,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(
-                    Icons.account_tree_outlined,
-                    color: _currentIndex == 2 ? const Color(0xFF10B96B) : const Color(0xFF9CA3AF),
-                  ),
-                ),
-              ),
-              label: 'PIPELINE',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(bottom: 4.0),
-                child: Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    color: _currentIndex == 3 ? const Color(0xFFE8F8F0) : Colors.transparent,
+                    color: _currentIndex == 3
+                        ? const Color(0xFFE8F8F0)
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     Icons.description_outlined,
-                    color: _currentIndex == 3 ? const Color(0xFF10B96B) : const Color(0xFF9CA3AF),
+                    color: _currentIndex == 3
+                        ? const Color(0xFF10B96B)
+                        : const Color(0xFF9CA3AF),
                   ),
                 ),
               ),
@@ -144,12 +155,16 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
                 child: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: _currentIndex == 4 ? const Color(0xFFE8F8F0) : Colors.transparent,
+                    color: _currentIndex == 4
+                        ? const Color(0xFFE8F8F0)
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     Icons.bar_chart_rounded,
-                    color: _currentIndex == 4 ? const Color(0xFF10B96B) : const Color(0xFF9CA3AF),
+                    color: _currentIndex == 4
+                        ? const Color(0xFF10B96B)
+                        : const Color(0xFF9CA3AF),
                   ),
                 ),
               ),

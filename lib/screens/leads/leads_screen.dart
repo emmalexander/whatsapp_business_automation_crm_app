@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:whatsapp_business_automation_crm_app/widgets/app_bar_logo.dart';
 
 import 'package:whatsapp_business_automation_crm_app/widgets/app_drawer.dart';
 
@@ -21,8 +22,16 @@ class _LeadsScreenState extends State<LeadsScreen> {
       "time": "2H AGO",
       "borderColor": const Color(0xFFB54D31),
       "chips": [
-        {"label": "NEGOTIATING", "bgColor": const Color(0xFFFBDFD9), "textColor": const Color(0xFF7A2011)},
-        {"label": "ENTERPRISE", "bgColor": const Color(0xFFE5ECFB), "textColor": const Color(0xFF3B507C)},
+        {
+          "label": "NEGOTIATING",
+          "bgColor": const Color(0xFFFBDFD9),
+          "textColor": const Color(0xFF7A2011),
+        },
+        {
+          "label": "ENTERPRISE",
+          "bgColor": const Color(0xFFE5ECFB),
+          "textColor": const Color(0xFF3B507C),
+        },
       ],
       "followUpText": "Follow-up: Oct 24",
       "followUpColor": const Color(0xFF141A25),
@@ -35,7 +44,11 @@ class _LeadsScreenState extends State<LeadsScreen> {
       "time": "YESTERDAY",
       "borderColor": const Color(0xFF0F9D58),
       "chips": [
-        {"label": "NEW LEAD", "bgColor": const Color(0xFFCCEFD9), "textColor": const Color(0xFF0F9D58)},
+        {
+          "label": "NEW LEAD",
+          "bgColor": const Color(0xFFCCEFD9),
+          "textColor": const Color(0xFF0F9D58),
+        },
       ],
       "followUpText": "Follow-up: Today",
       "followUpColor": const Color(0xFF0F9D58),
@@ -48,8 +61,16 @@ class _LeadsScreenState extends State<LeadsScreen> {
       "time": "3D AGO",
       "borderColor": const Color(0xFFD4DBF3),
       "chips": [
-        {"label": "INTERESTED", "bgColor": const Color(0xFFE5ECFB), "textColor": const Color(0xFF3B507C)},
-        {"label": "LOW PRIORITY", "bgColor": const Color(0xFFF3F5FA), "textColor": const Color(0xFF5A6678)},
+        {
+          "label": "INTERESTED",
+          "bgColor": const Color(0xFFE5ECFB),
+          "textColor": const Color(0xFF3B507C),
+        },
+        {
+          "label": "LOW PRIORITY",
+          "bgColor": const Color(0xFFF3F5FA),
+          "textColor": const Color(0xFF5A6678),
+        },
       ],
       "followUpText": "Follow-up: Nov 02",
       "followUpColor": const Color(0xFF5A6678),
@@ -62,7 +83,11 @@ class _LeadsScreenState extends State<LeadsScreen> {
       "time": "5H AGO",
       "borderColor": const Color(0xFF3B507C),
       "chips": [
-        {"label": "NEGOTIATING", "bgColor": const Color(0xFFFBDFD9), "textColor": const Color(0xFF7A2011)},
+        {
+          "label": "NEGOTIATING",
+          "bgColor": const Color(0xFFFBDFD9),
+          "textColor": const Color(0xFF7A2011),
+        },
       ],
       "followUpText": "Follow-up: Oct 28",
       "followUpColor": const Color(0xFF141A25),
@@ -81,7 +106,11 @@ class _LeadsScreenState extends State<LeadsScreen> {
         "time": "JUST NOW",
         "borderColor": const Color(0xFF0F9D58),
         "chips": [
-          {"label": "NEW LEAD", "bgColor": const Color(0xFFCCEFD9), "textColor": const Color(0xFF0F9D58)},
+          {
+            "label": "NEW LEAD",
+            "bgColor": const Color(0xFFCCEFD9),
+            "textColor": const Color(0xFF0F9D58),
+          },
         ],
         "followUpText": "Follow-up: Today",
         "followUpColor": const Color(0xFF0F9D58),
@@ -100,37 +129,31 @@ class _LeadsScreenState extends State<LeadsScreen> {
   @override
   Widget build(BuildContext context) {
     final filteredLeads = mockLeads
-        .where((lead) => lead['name'].toLowerCase().contains(searchQuery.toLowerCase()))
+        .where(
+          (lead) =>
+              lead['name'].toLowerCase().contains(searchQuery.toLowerCase()),
+        )
         .toList();
 
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9FB),
-      drawer: const AppDrawer(currentIndex: 1),
+      //drawer: const AppDrawer(currentIndex: 1),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF9F9FB),
         elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: Color(0xFF141A25)),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: Row(
-          children: [
-            Text(
-              'LedgeCRM',
-              style: GoogleFonts.inter(
-                color: const Color(0xFF0F9D58),
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                letterSpacing: -0.5,
-              ),
-            ),
-          ],
-        ),
+        // leading: Builder(
+        //   builder: (context) => IconButton(
+        //     icon: const Icon(Icons.menu, color: Color(0xFF141A25)),
+        //     onPressed: () => Scaffold.of(context).openDrawer(),
+        //   ),
+        // ),
+        title: AppBarLogo(),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_none, color: Color(0xFF141A25)),
+            icon: const Icon(
+              Icons.notifications_none,
+              color: Color(0xFF141A25),
+            ),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('No new notifications')),
@@ -173,7 +196,7 @@ class _LeadsScreenState extends State<LeadsScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            
+
             // Search Bar
             Row(
               children: [
@@ -192,8 +215,15 @@ class _LeadsScreenState extends State<LeadsScreen> {
                       },
                       decoration: InputDecoration(
                         hintText: 'Search contacts...',
-                        hintStyle: GoogleFonts.inter(color: const Color(0xFF5A6678), fontSize: 14),
-                        prefixIcon: const Icon(Icons.search, color: Color(0xFF5A6678), size: 18),
+                        hintStyle: GoogleFonts.inter(
+                          color: const Color(0xFF5A6678),
+                          fontSize: 14,
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Color(0xFF5A6678),
+                          size: 18,
+                        ),
                         border: InputBorder.none,
                         contentPadding: const EdgeInsets.only(top: 14),
                       ),
@@ -206,7 +236,9 @@ class _LeadsScreenState extends State<LeadsScreen> {
                     showModalBottomSheet(
                       context: context,
                       shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
                       ),
                       builder: (context) {
                         return Padding(
@@ -215,16 +247,38 @@ class _LeadsScreenState extends State<LeadsScreen> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Filter By Status', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold)),
+                              Text(
+                                'Filter By Status',
+                                style: GoogleFonts.inter(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               const SizedBox(height: 16),
-                              ListTile(title: const Text('New Lead'), leading: const Icon(Icons.fiber_new), onTap: () => Navigator.pop(context)),
-                              ListTile(title: const Text('Negotiating'), leading: const Icon(Icons.sync_alt), onTap: () => Navigator.pop(context)),
-                              ListTile(title: const Text('Interested'), leading: const Icon(Icons.thumb_up), onTap: () => Navigator.pop(context)),
-                              ListTile(title: const Text('Low Priority'), leading: const Icon(Icons.low_priority), onTap: () => Navigator.pop(context)),
+                              ListTile(
+                                title: const Text('New Lead'),
+                                leading: const Icon(Icons.fiber_new),
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              ListTile(
+                                title: const Text('Negotiating'),
+                                leading: const Icon(Icons.sync_alt),
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              ListTile(
+                                title: const Text('Interested'),
+                                leading: const Icon(Icons.thumb_up),
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              ListTile(
+                                title: const Text('Low Priority'),
+                                leading: const Icon(Icons.low_priority),
+                                onTap: () => Navigator.pop(context),
+                              ),
                             ],
                           ),
                         );
-                      }
+                      },
                     );
                   },
                   child: Container(
@@ -248,11 +302,28 @@ class _LeadsScreenState extends State<LeadsScreen> {
                   padding: const EdgeInsets.all(32.0),
                   child: Column(
                     children: [
-                      const Icon(Icons.group_off, size: 64, color: Color(0xFFD3DCF6)),
+                      const Icon(
+                        Icons.group_off,
+                        size: 64,
+                        color: Color(0xFFD3DCF6),
+                      ),
                       const SizedBox(height: 16),
-                      Text('No leads found', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: const Color(0xFF5A6678))),
+                      Text(
+                        'No leads found',
+                        style: GoogleFonts.inter(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF5A6678),
+                        ),
+                      ),
                       const SizedBox(height: 8),
-                      Text('Try adjusting your search or add a new lead.', textAlign: TextAlign.center, style: GoogleFonts.inter(color: const Color(0xFF8C95A6))),
+                      Text(
+                        'Try adjusting your search or add a new lead.',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFF8C95A6),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -261,8 +332,16 @@ class _LeadsScreenState extends State<LeadsScreen> {
               ...filteredLeads.asMap().entries.map((entry) {
                 final int originalIndex = mockLeads.indexOf(entry.value);
                 final lead = entry.value;
-                List<Widget> chipWidgets = (lead['chips'] as List).map((c) => _buildChip(c['label'], bgColor: c['bgColor'], textColor: c['textColor'])).toList();
-                
+                List<Widget> chipWidgets = (lead['chips'] as List)
+                    .map(
+                      (c) => _buildChip(
+                        c['label'],
+                        bgColor: c['bgColor'],
+                        textColor: c['textColor'],
+                      ),
+                    )
+                    .toList();
+
                 return _buildLeadCard(
                   context,
                   index: originalIndex,
@@ -277,8 +356,8 @@ class _LeadsScreenState extends State<LeadsScreen> {
                   isFollowUpBold: lead['isFollowUpBold'],
                 );
               }),
-            
-             const SizedBox(height: 80),
+
+            const SizedBox(height: 80),
           ],
         ),
       ),
@@ -296,22 +375,36 @@ class _LeadsScreenState extends State<LeadsScreen> {
               return Padding(
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,
-                  left: 20, right: 20, top: 20,
+                  left: 20,
+                  right: 20,
+                  top: 20,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Add New Lead', style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(
+                      'Add New Lead',
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: nameCtrl,
-                      decoration: const InputDecoration(labelText: 'Name', border: OutlineInputBorder()),
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                     const SizedBox(height: 12),
                     TextField(
                       controller: phoneCtrl,
-                      decoration: const InputDecoration(labelText: 'Phone', border: OutlineInputBorder()),
+                      decoration: const InputDecoration(
+                        labelText: 'Phone',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                     const SizedBox(height: 20),
                     SizedBox(
@@ -319,17 +412,27 @@ class _LeadsScreenState extends State<LeadsScreen> {
                       height: 48,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (nameCtrl.text.isNotEmpty && phoneCtrl.text.isNotEmpty) {
+                          if (nameCtrl.text.isNotEmpty &&
+                              phoneCtrl.text.isNotEmpty) {
                             _addLead(nameCtrl.text, phoneCtrl.text);
                             Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Lead Added Successfully!')));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Lead Added Successfully!'),
+                              ),
+                            );
                           }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF13BA5E),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
-                        child: const Text('SAVE LEAD', style: TextStyle(fontWeight: FontWeight.bold)),
+                        child: const Text(
+                          'SAVE LEAD',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -346,7 +449,11 @@ class _LeadsScreenState extends State<LeadsScreen> {
     );
   }
 
-  Widget _buildChip(String label, {required Color bgColor, required Color textColor}) {
+  Widget _buildChip(
+    String label, {
+    required Color bgColor,
+    required Color textColor,
+  }) {
     return Container(
       margin: const EdgeInsets.only(right: 8),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -366,7 +473,8 @@ class _LeadsScreenState extends State<LeadsScreen> {
     );
   }
 
-  Widget _buildLeadCard(BuildContext context, {
+  Widget _buildLeadCard(
+    BuildContext context, {
     required int index,
     required String name,
     required String phone,
@@ -380,16 +488,17 @@ class _LeadsScreenState extends State<LeadsScreen> {
   }) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => const LeadProfileScreen()));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const LeadProfileScreen()),
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border(
-            left: BorderSide(color: borderColor, width: 4),
-          ),
+          border: Border(left: BorderSide(color: borderColor, width: 4)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.01),
@@ -441,23 +550,41 @@ class _LeadsScreenState extends State<LeadsScreen> {
                       ),
                       const SizedBox(width: 12),
                       PopupMenuButton<String>(
-                        icon: const Icon(Icons.more_vert, color: Color(0xFF8C95A6), size: 18),
+                        icon: const Icon(
+                          Icons.more_vert,
+                          color: Color(0xFF8C95A6),
+                          size: 18,
+                        ),
                         onSelected: (value) {
                           if (value == 'delete') {
                             showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
                                 title: const Text('Delete Lead'),
-                                content: Text('Are you sure you want to delete "$name"?'),
+                                content: Text(
+                                  'Are you sure you want to delete "$name"?',
+                                ),
                                 actions: [
-                                  TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Cancel'),
+                                  ),
                                   TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                       _deleteLead(index);
-                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Lead Deleted')));
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Lead Deleted'),
+                                        ),
+                                      );
                                     },
-                                    child: const Text('Delete', style: TextStyle(color: Colors.red)),
+                                    child: const Text(
+                                      'Delete',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -465,8 +592,14 @@ class _LeadsScreenState extends State<LeadsScreen> {
                           }
                         },
                         itemBuilder: (context) => [
-                          const PopupMenuItem(value: 'edit', child: Text('Edit')),
-                          const PopupMenuItem(value: 'delete', child: Text('Delete')),
+                          const PopupMenuItem(
+                            value: 'edit',
+                            child: Text('Edit'),
+                          ),
+                          const PopupMenuItem(
+                            value: 'delete',
+                            child: Text('Delete'),
+                          ),
                         ],
                       ),
                     ],
@@ -486,7 +619,9 @@ class _LeadsScreenState extends State<LeadsScreen> {
                     followUpText,
                     style: GoogleFonts.inter(
                       fontSize: 11,
-                      fontWeight: isFollowUpBold ? FontWeight.w700 : FontWeight.w600,
+                      fontWeight: isFollowUpBold
+                          ? FontWeight.w700
+                          : FontWeight.w600,
                       color: followUpColor,
                     ),
                   ),

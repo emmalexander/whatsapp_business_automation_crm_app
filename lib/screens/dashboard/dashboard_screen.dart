@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:whatsapp_business_automation_crm_app/providers/user_provider.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/profile/profile_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/utils/logo_painter.dart';
+import 'package:whatsapp_business_automation_crm_app/widgets/app_bar_logo.dart';
 
 import 'package:whatsapp_business_automation_crm_app/widgets/app_drawer.dart';
 
@@ -17,42 +18,17 @@ class DashboardScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9FB),
-      drawer: const AppDrawer(currentIndex: 0),
+      //drawer: const AppDrawer(currentIndex: 0),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF9F9FB),
         elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: Color(0xFF141A25)),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: Row(
-          children: [
-            Container(
-              width: 24,
-              height: 24,
-              margin: const EdgeInsets.only(right: 8),
-              decoration: BoxDecoration(
-                color: const Color(0xFF13BA5E),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: CustomPaint(painter: LogoPainter()),
-              ),
-            ),
-            Text(
-              'LedgeCRM',
-              style: GoogleFonts.inter(
-                color: const Color(0xFF141A25),
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                letterSpacing: -0.5,
-              ),
-            ),
-          ],
-        ),
+        // leading: Builder(
+        //   builder: (context) => IconButton(
+        //     icon: const Icon(Icons.menu, color: Color(0xFF141A25)),
+        //     onPressed: () => Scaffold.of(context).openDrawer(),
+        //   ),
+        // ),
+        title: AppBarLogo(),
         actions: [
           IconButton(
             icon: const Icon(
