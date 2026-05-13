@@ -21,6 +21,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   country_picker: ^2.0.26
   get_country_ip: ^0.0.2
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:

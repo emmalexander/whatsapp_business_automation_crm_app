@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:whatsapp_business_automation_crm_app/core/network_exception_handler.dart';
 import 'package:whatsapp_business_automation_crm_app/models/user_model.dart';
 import 'package:whatsapp_business_automation_crm_app/services/dio_client.dart';
@@ -191,6 +192,34 @@ class ApiService {
       throw NetworkExceptionHandler.handleApiException(e);
     } finally {
       await _tokenStorage.clearTokens();
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Chats: Upload WhatsApp Chat Export (ZIP)
+  // POST /chats/upload
+  // ---------------------------------------------------------------------------
+  Future<void> uploadChatExport(
+    String filePath, {
+    void Function(int sent, int total)? onProgress,
+  }) async {
+    try {
+      final fileName = filePath.split('/').last;
+      final formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(
+          filePath,
+          filename: fileName,
+          contentType: DioMediaType('application', 'zip'),
+        ),
+      });
+
+      await _dio.post(
+        '/chats/upload',
+        data: formData,
+        onSendProgress: onProgress,
+      );
+    } on DioException catch (e) {
+      throw NetworkExceptionHandler.handleApiException(e);
     }
   }
 
