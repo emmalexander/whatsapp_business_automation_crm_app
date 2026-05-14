@@ -11,10 +11,14 @@ class ChatUploadOverlay extends StatefulWidget {
   /// Name of the file being uploaded (shown in the subtitle).
   final String? fileName;
 
+  /// Callback when the user cancels the upload.
+  final VoidCallback? onCancel;
+
   const ChatUploadOverlay({
     super.key,
     required this.progress,
     this.fileName,
+    this.onCancel,
   });
 
   @override
@@ -252,6 +256,26 @@ class _ChatUploadOverlayState extends State<ChatUploadOverlay>
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+                    const SizedBox(height: 40),
+                    if (widget.onCancel != null)
+                      OutlinedButton(
+                        onPressed: widget.onCancel,
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.white.withOpacity(0.7),
+                          side: BorderSide(color: Colors.white.withOpacity(0.2)),
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                        ),
+                        child: Text(
+                          'Cancel Upload',
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),

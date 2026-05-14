@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/legacy.dart'
     show StateNotifier, StateNotifierProvider;
 import 'package:whatsapp_business_automation_crm_app/providers/auth_provider.dart';
@@ -45,10 +46,15 @@ class ChatUploadState {
 
 class ChatUploadNotifier extends StateNotifier<ChatUploadState> {
   final ApiService _apiService;
+  CancelToken? _cancelToken;
 
   ChatUploadNotifier(this._apiService) : super(const ChatUploadState());
 
-  Future<void> upload(String filePath) async {
+  Future<void> upload({
+    required String filePath,
+    required String name,
+    required String phoneNumber,
+  }) async {
     if (state.status == ChatUploadStatus.uploading) return;
 
     state = ChatUploadState(
@@ -57,9 +63,14 @@ class ChatUploadNotifier extends StateNotifier<ChatUploadState> {
       progress: 0.0,
     );
 
+    _cancelToken = CancelToken();
+
     try {
       await _apiService.uploadChatExport(
         filePath,
+        name: name,
+        phoneNumber: phoneNumber,
+        cancelToken: _cancelToken,
         onProgress: (sent, total) {
           if (total > 0) {
             state = state.copyWith(progress: sent / total);
@@ -72,11 +83,22 @@ class ChatUploadNotifier extends StateNotifier<ChatUploadState> {
         progress: 1.0,
       );
     } catch (e) {
+      if (e is DioException && e.type == DioExceptionType.cancel) {
+        state = const ChatUploadState();
+        return;
+      }
       state = state.copyWith(
         status: ChatUploadStatus.error,
         errorMessage: e.toString(),
       );
+    } finally {
+      _cancelToken = null;
     }
+  }
+
+  void cancel() {
+    _cancelToken?.cancel('User cancelled upload');
+    state = const ChatUploadState();
   }
 
   void reset() {

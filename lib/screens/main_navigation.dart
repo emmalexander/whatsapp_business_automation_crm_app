@@ -13,6 +13,7 @@ import 'package:whatsapp_business_automation_crm_app/screens/dashboard/dashboard
 import 'package:whatsapp_business_automation_crm_app/screens/leads/leads_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/templates/templates_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/widgets/chat_upload_overlay.dart';
+import 'package:whatsapp_business_automation_crm_app/widgets/lead_info_dialog.dart';
 
 class MainNavigation extends ConsumerStatefulWidget {
   final int initialIndex;
@@ -87,8 +88,33 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
       return;
     }
 
-    // Begin upload
-    ref.read(chatUploadProvider.notifier).upload(path);
+    // Show Lead Info Dialog before upload
+    _showLeadInfoDialog(path);
+  }
+
+  void _showLeadInfoDialog(String filePath) {
+    if (!mounted) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => LeadInfoDialog(
+        fileName: filePath.split('/').last,
+        onConfirm: (name, phone) {
+          Navigator.pop(context);
+          // Begin upload with captured details
+          ref.read(chatUploadProvider.notifier).upload(
+                filePath: filePath,
+                name: name,
+                phoneNumber: phone,
+              );
+        },
+        onCancel: () {
+          Navigator.pop(context);
+          _showToast('Upload cancelled', isError: true);
+        },
+      ),
+    );
   }
 
   // ---------------------------------------------------------------------------
@@ -310,6 +336,10 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
             child: ChatUploadOverlay(
               progress: uploadState.progress,
               fileName: uploadState.filePath?.split('/').last,
+              onCancel: () {
+                ref.read(chatUploadProvider.notifier).cancel();
+                _showToast('Upload cancelled', isError: true);
+              },
             ),
           ),
       ],

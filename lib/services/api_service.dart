@@ -201,11 +201,16 @@ class ApiService {
   // ---------------------------------------------------------------------------
   Future<void> uploadChatExport(
     String filePath, {
+    required String name,
+    required String phoneNumber,
     void Function(int sent, int total)? onProgress,
+    CancelToken? cancelToken,
   }) async {
     try {
       final fileName = filePath.split('/').last;
       final formData = FormData.fromMap({
+        'name': name,
+        'phoneNumber': phoneNumber,
         'file': await MultipartFile.fromFile(
           filePath,
           filename: fileName,
@@ -213,11 +218,14 @@ class ApiService {
         ),
       });
 
-      await _dio.post(
+      final response = await _dio.post(
         '/chats/upload',
         data: formData,
         onSendProgress: onProgress,
+        cancelToken: cancelToken,
       );
+
+      log(json.encode(response.data));
     } on DioException catch (e) {
       throw NetworkExceptionHandler.handleApiException(e);
     }
