@@ -7,12 +7,14 @@ import 'package:flutter_sharing_intent/flutter_sharing_intent.dart';
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:whatsapp_business_automation_crm_app/providers/chat_upload_provider.dart';
+import 'package:whatsapp_business_automation_crm_app/providers/navigation_provider.dart';
 import 'package:whatsapp_business_automation_crm_app/providers/user_provider.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/analytics/analytics_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/dashboard/dashboard_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/leads/leads_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/screens/templates/templates_screen.dart';
 import 'package:whatsapp_business_automation_crm_app/widgets/chat_upload_overlay.dart';
+import 'package:whatsapp_business_automation_crm_app/widgets/custom_bottom_nav_bar.dart';
 import 'package:whatsapp_business_automation_crm_app/widgets/lead_info_dialog.dart';
 
 class MainNavigation extends ConsumerStatefulWidget {
@@ -24,8 +26,6 @@ class MainNavigation extends ConsumerStatefulWidget {
 }
 
 class _MainNavigationState extends ConsumerState<MainNavigation> {
-  late int _currentIndex;
-
   final List<Widget> _screens = [
     const DashboardScreen(),
     const LeadsScreen(),
@@ -40,9 +40,9 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
   @override
   void initState() {
     super.initState();
-    _currentIndex = widget.initialIndex;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(navigationProvider.notifier).setIndex(widget.initialIndex);
       ref.read(userProvider.notifier).getUser();
       _initSharingIntent();
     });
@@ -54,9 +54,9 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
 
   void _initSharingIntent() {
     // 1. Handle the initial file if the app was opened via a share action.
-    FlutterSharingIntent.instance
-        .getInitialSharing()
-        .then((List<SharedFile> files) {
+    FlutterSharingIntent.instance.getInitialSharing().then((
+      List<SharedFile> files,
+    ) {
       _handleSharedFiles(files);
     });
 
@@ -103,11 +103,9 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
         onConfirm: (name, phone) {
           Navigator.pop(context);
           // Begin upload with captured details
-          ref.read(chatUploadProvider.notifier).upload(
-                filePath: filePath,
-                name: name,
-                phoneNumber: phone,
-              );
+          ref
+              .read(chatUploadProvider.notifier)
+              .upload(filePath: filePath, name: name, phoneNumber: phone);
         },
         onCancel: () {
           Navigator.pop(context);
@@ -147,13 +145,17 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: isError ? const Color(0xFFEF4444) : const Color(0xFF10B96B),
+        backgroundColor: isError
+            ? const Color(0xFFEF4444)
+            : const Color(0xFF10B96B),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
         content: Row(
           children: [
             Icon(
-              isError ? Icons.error_outline_rounded : Icons.check_circle_outline_rounded,
+              isError
+                  ? Icons.error_outline_rounded
+                  : Icons.check_circle_outline_rounded,
               color: Colors.white,
               size: 20,
             ),
@@ -188,146 +190,13 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
     });
 
     final uploadState = ref.watch(chatUploadProvider);
+    final currentIndex = ref.watch(navigationProvider);
 
     return Stack(
       children: [
         Scaffold(
-          body: _screens[_currentIndex],
-          bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 10,
-                  offset: const Offset(0, -4),
-                ),
-              ],
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            child: BottomNavigationBar(
-              currentIndex: _currentIndex,
-              onTap: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              selectedItemColor: const Color(0xFF10B96B),
-              unselectedItemColor: const Color(0xFF9CA3AF),
-              selectedFontSize: 10,
-              unselectedFontSize: 10,
-              selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-              items: [
-                BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: const EdgeInsets.only(bottom: 4.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: _currentIndex == 0
-                            ? const Color(0xFFE8F8F0)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.dashboard_rounded,
-                        color: _currentIndex == 0
-                            ? const Color(0xFF10B96B)
-                            : const Color(0xFF9CA3AF),
-                      ),
-                    ),
-                  ),
-                  label: 'DASHBOARD',
-                ),
-                BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: const EdgeInsets.only(bottom: 4.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: _currentIndex == 1
-                            ? const Color(0xFFE8F8F0)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.person_pin_rounded,
-                        color: _currentIndex == 1
-                            ? const Color(0xFF10B96B)
-                            : const Color(0xFF9CA3AF),
-                      ),
-                    ),
-                  ),
-                  label: 'LEADS',
-                ),
-                // BottomNavigationBarItem(
-                //   icon: Padding(
-                //     padding: const EdgeInsets.only(bottom: 4.0),
-                //     child: Container(
-                //       padding: const EdgeInsets.all(6),
-                //       decoration: BoxDecoration(
-                //         color: _currentIndex == 2 ? const Color(0xFFE8F8F0) : Colors.transparent,
-                //         borderRadius: BorderRadius.circular(8),
-                //       ),
-                //       child: Icon(
-                //         Icons.account_tree_outlined,
-                //         color: _currentIndex == 2 ? const Color(0xFF10B96B) : const Color(0xFF9CA3AF),
-                //       ),
-                //     ),
-                //   ),
-                //   label: 'PIPELINE',
-                // ),
-                BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: const EdgeInsets.only(bottom: 4.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: _currentIndex == 3
-                            ? const Color(0xFFE8F8F0)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.description_outlined,
-                        color: _currentIndex == 3
-                            ? const Color(0xFF10B96B)
-                            : const Color(0xFF9CA3AF),
-                      ),
-                    ),
-                  ),
-                  label: 'TEMPLATES',
-                ),
-                BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: const EdgeInsets.only(bottom: 4.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: _currentIndex == 4
-                            ? const Color(0xFFE8F8F0)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.bar_chart_rounded,
-                        color: _currentIndex == 4
-                            ? const Color(0xFF10B96B)
-                            : const Color(0xFF9CA3AF),
-                      ),
-                    ),
-                  ),
-                  label: 'ANALYTICS',
-                ),
-              ],
-            ),
-          ),
+          body: _screens[currentIndex],
+          bottomNavigationBar: const CustomBottomNavBar(),
         ),
 
         // ── Upload overlay ──────────────────────────────────────────────────
